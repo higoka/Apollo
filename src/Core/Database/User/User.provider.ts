@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { DatabaseModule } from "../Database.module";
 import { User } from "./User.entity";
 
 export const UserProvider = [
