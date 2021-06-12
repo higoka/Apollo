@@ -1,3 +1,4 @@
+import { InPacket } from "src/Messages/Incoming/In.packet";
 import * as ws from "ws";
 
 export const NetworkingProvider = [
@@ -10,7 +11,11 @@ export const NetworkingProvider = [
             });
             server.on('connection', function connection(ws, req) {
                 ws.onmessage = function(event: ws.MessageEvent) {
-                    console.log(event.data);
+                    var inPacket: InPacket = new InPacket(event.data);
+                    inPacket.readInt();
+                    var packetId: number = inPacket.readShort();
+                    inPacket.header = packetId;
+                    console.log(inPacket.header);
                 }
             });
         }
