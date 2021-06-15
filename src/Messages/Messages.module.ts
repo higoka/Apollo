@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
-import { InPacket } from './Incoming/In.packet';
+import { HabboModule } from 'src/Games/User/Habbo.module';
+import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { MessagesService } from './Messages.service';
-import { OutPacket } from './Outgoing/Out.packet';
 
 @Module({
+    imports: [
+        HabboModule
+    ],
     providers: [
-        MessagesService
+        MessagesService,
+        SecureLoginEvent
     ],
     exports: [
-        MessagesService
+        MessagesService,
+        SecureLoginEvent
     ]
 })
 export class MessagesModule {}

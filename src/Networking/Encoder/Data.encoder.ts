@@ -1,7 +1,5 @@
-import { Injectable } from '@nestjs/common'
 import { OutPacket } from 'src/Messages/Outgoing/Out.packet';
 
-@Injectable()
 export class DataEncoder {
     private outPacket: OutPacket;
 

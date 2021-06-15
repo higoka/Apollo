@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GameclientModule } from 'src/Games/GameClient/Gameclient.module';
 import { MessagesModule } from 'src/Messages/Messages.module';
-import { DataEncoder } from './Encoder/Data.encoder';
 import { NetworkingProvider } from './Networking.provider';
 
 @Module({
@@ -10,11 +9,9 @@ import { NetworkingProvider } from './Networking.provider';
         GameclientModule
     ],
     providers: [
-        NetworkingProvider,
-        DataEncoder
+        NetworkingProvider
     ],
     exports: [
-        DataEncoder,
         NetworkingProvider
     ]
 })

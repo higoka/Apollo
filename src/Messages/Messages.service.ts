@@ -1,4 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
+import { HabboService } from 'src/Games/User/Habbo.service';
+import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { InPacket } from './Incoming/In.packet';
 import { IncomingList } from './Incoming/IncomingList';
 import { MessageHandler } from './Incoming/message.handler';
@@ -8,7 +11,9 @@ export class MessagesService {
     public incomingPackets: Map<number, MessageHandler>;
     public packetNames: Map<number, string>;
 
-    constructor() {
+    constructor(
+        private readonly habboService: HabboService
+    ) {
         this.incomingPackets = new Map<number, MessageHandler>();
         this.packetNames = new Map<number, string>();
 
@@ -21,7 +26,7 @@ export class MessagesService {
         return this.incomingPackets.has(packetId);
     }
 
-    handlePacket(client: any, packet: InPacket): void {
+    handlePacket(client: GameclientDefs, packet: InPacket): void {
         if (client == null) {
             return;
         }
@@ -41,7 +46,7 @@ export class MessagesService {
 
     registerHandshake(): void {
         //this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
-        //this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent());
+        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.habboService));
     }
 
     registerUsers(): void {
