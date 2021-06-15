@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { HabboDefs } from 'src/Games/User/Habbo.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
+import { LoginOKComposer } from 'src/Messages/Outgoing/Handshake/LoginOKComposer';
+import { OutgoingList } from 'src/Messages/Outgoing/Outgoing.list';
 import { MessageHandler } from "../message.handler";
 
 @Injectable()
@@ -19,7 +21,7 @@ export class SecureLoginEvent extends MessageHandler {
         }
 
         this.habboService.loadHabbo(sso).then((habbo: HabboDefs) => {
-            
+            this.gameClient.send(OutgoingList.AUTHENTICATED, new LoginOKComposer().compose());
         });
     }
 }

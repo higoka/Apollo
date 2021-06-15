@@ -3,8 +3,8 @@ import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { InPacket } from './Incoming/In.packet';
-import { IncomingList } from './Incoming/IncomingList';
-import { MessageHandler } from './Incoming/message.handler';
+import { IncomingList } from './Incoming/Incoming.list';
+import { MessageHandler } from './Incoming/Message.handler';
 
 @Injectable()
 export class MessagesService {
