@@ -32,6 +32,7 @@
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",
     "@types/socket.io": "^3.0.2",
+    "bit-buffer-ts": "^0.8.1",
     "socket.io": "^4.1.2"
   }
 }

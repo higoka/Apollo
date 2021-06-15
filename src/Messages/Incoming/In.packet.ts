@@ -1,4 +1,3 @@
-declare var TextDecoder: any;
 import { Injectable } from '@nestjs/common'
 
 @Injectable()

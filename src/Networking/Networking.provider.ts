@@ -4,7 +4,7 @@ import * as ws from "ws";
 export const NetworkingProvider = [
     {
         provide: 'NETWORKING_CONNECTION',
-        useFactory: (server: ws.Server) => {
+        useFactory: () => {
             var server: ws.Server = new ws.Server({
                 host: "127.0.0.1",
                 port: 2096
