@@ -1,6 +1,3 @@
-import { Injectable } from '@nestjs/common'
-
-@Injectable()
 export class OutPacket {
     private buffer: Uint8Array;
 

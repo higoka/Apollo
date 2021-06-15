@@ -1,18 +1,21 @@
 import { Module } from '@nestjs/common';
+import { GameclientModule } from 'src/Games/GameClient/Gameclient.module';
 import { MessagesModule } from 'src/Messages/Messages.module';
 import { DataEncoder } from './Encoder/Data.encoder';
 import { NetworkingProvider } from './Networking.provider';
 
 @Module({
     imports: [
-        MessagesModule
+        MessagesModule,
+        GameclientModule
     ],
     providers: [
-        ...NetworkingProvider,
+        NetworkingProvider,
         DataEncoder
     ],
     exports: [
-        DataEncoder
+        DataEncoder,
+        NetworkingProvider
     ]
 })
 export class NetworkingModule {}

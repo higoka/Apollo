@@ -22,9 +22,9 @@ export class MessagesService {
     }
 
     handlePacket(client: any, packet: InPacket): void {
-        /*if (client == null) {
+        if (client == null) {
             return;
-        }*/
+        }
 
         if (this.checkRegister(packet.header)) {
             var handler: MessageHandler = this.incomingPackets.get(packet.header);
@@ -33,7 +33,7 @@ export class MessagesService {
             }
 
             handler.entryPacket = packet;
-            //handler.gameClient = client;
+            handler.gameClient = client;
 
             handler.handle();
         }

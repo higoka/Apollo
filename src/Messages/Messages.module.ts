@@ -5,13 +5,9 @@ import { OutPacket } from './Outgoing/Out.packet';
 
 @Module({
     providers: [
-        InPacket,
-        OutPacket,
         MessagesService
     ],
     exports: [
-        InPacket,
-        OutPacket,
         MessagesService
     ]
 })

@@ -3,10 +3,10 @@ import { OutPacket } from 'src/Messages/Outgoing/Out.packet';
 
 @Injectable()
 export class DataEncoder {
-    constructor(
-        private readonly outPacket: OutPacket
-    ) {
+    private outPacket: OutPacket;
 
+    constructor() {
+        this.outPacket = new OutPacket();
     }
 
     public encode(header: number, messages: any[]): OutPacket {

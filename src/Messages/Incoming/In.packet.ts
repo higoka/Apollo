@@ -1,6 +1,3 @@
-import { Injectable } from '@nestjs/common'
-
-@Injectable()
 export class InPacket {
     private position: number;
     private dataView: DataView;
