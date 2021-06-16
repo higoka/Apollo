@@ -26,6 +26,11 @@ export class SecureLoginEvent extends MessageHandler {
                     habbo.client = this.gameClient;
                     this.gameClient.habbo = habbo;
 
+                    if (this.gameClient.habbo.habboInfo == null) {
+                        return;
+                    }
+
+                    this.habboService.addHabbo(habbo);
                     this.gameClient.send(OutgoingList.AUTHENTICATED, new LoginOKComposer().compose());
                 }
             });
