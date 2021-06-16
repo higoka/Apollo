@@ -1,20 +1,39 @@
-import { createConnection } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { createConnection, getConnectionManager, getConnection, Connection } from 'typeorm';
+import { ConfigurationService } from '../Configuration/Configuration.service';
 import { User } from './User/User.entity';
 
-export const DatabaseProviders = [
-    {
-        provide: 'DATABASE_CONNECTION',
-        useFactory: async () => await createConnection({
+@Injectable()
+export class DatabaseProvider {
+    constructor(
+        private readonly configurationService: ConfigurationService
+    ) {
+        this.create();
+    }
+
+    async create(): Promise<Connection> {
+        return await createConnection({
+            name: "Apollo",
             type: 'mysql',
-            host: '127.0.0.1',
-            port: 3306,
-            username: 'root',
-            password: 'cosimo',
-            database: 'cosmic',
+            host: this.configurationService.getString("database.host"),
+            port: this.configurationService.getInt("database.port"),
+            username: this.configurationService.getString("database.user"),
+            password: this.configurationService.getString("database.psw"),
+            database: this.configurationService.getString("database.source"),
             entities: [
                 User
             ],
             synchronize: false,
-        }),
+        });
     }
-];
+
+    getConnection(): any {
+        if (getConnectionManager().has("Apollo")) {
+            if (getConnection("Apollo").isConnected) {
+                return getConnection("Apollo");
+            } else {
+                return getConnection("Apollo").connect();
+            }
+        }
+    }
+}

@@ -1,10 +1,17 @@
-import { Connection } from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { DatabaseProvider } from '../Database.provider';
+import { Repository } from 'typeorm';
 import { User } from "./User.entity";
 
-export const UserProvider = [
-    {
-        provide: 'USER_REPOSITORY',
-        useFactory: (connection: Connection) => connection.getRepository(User),
-        inject: ['DATABASE_CONNECTION'],
+@Injectable()
+export class UserProvider {
+    constructor(
+        private readonly databaseProvider: DatabaseProvider
+    ) {
+        
     }
-]
+
+    get userRepository(): Repository<User> {
+        return this.databaseProvider.getConnection().getRepository(User);
+    }
+}

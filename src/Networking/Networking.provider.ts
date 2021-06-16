@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigurationService } from "src/Core/Configuration/Configuration.service";
 import { GameclientDefs } from "src/Games/GameClient/Gameclient.defs";
 import { GameclientService } from "src/Games/GameClient/Gameclient.service";
 import { InPacket } from "src/Messages/Incoming/In.packet";
@@ -8,12 +9,13 @@ import * as ws from "ws";
 @Injectable()
 export class NetworkingProvider {
     constructor(
+        private readonly configurationService: ConfigurationService,
         private readonly messagesService: MessagesService,
         private readonly gameclientService: GameclientService
     ) {
         var server: ws.Server = new ws.Server({
-            host: "127.0.0.1",
-            port: 2096
+            host: this.configurationService.getString("game.tcp.ip"),
+            port: this.configurationService.getInt("game.tcp.port")
         });
 
         var self = this;

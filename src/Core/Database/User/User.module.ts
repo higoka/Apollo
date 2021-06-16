@@ -8,7 +8,7 @@ import { UserService } from './User.service';
         DatabaseModule
     ],
     providers: [
-        ...UserProvider,
+        UserProvider,
         UserService
     ],
     exports: [

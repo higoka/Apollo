@@ -20,8 +20,15 @@ export class SecureLoginEvent extends MessageHandler {
             return;
         }
 
-        this.habboService.loadHabbo(sso).then((habbo: HabboDefs) => {
-            this.gameClient.send(OutgoingList.AUTHENTICATED, new LoginOKComposer().compose());
-        });
+        if (this.gameClient.habbo == null) {
+            this.habboService.loadHabbo(sso).then((habbo: HabboDefs) => {
+                if (habbo != null) {
+                    habbo.client = this.gameClient;
+                    this.gameClient.habbo = habbo;
+
+                    this.gameClient.send(OutgoingList.AUTHENTICATED, new LoginOKComposer().compose());
+                }
+            });
+        }
     }
 }

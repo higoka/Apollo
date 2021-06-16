@@ -1,4 +1,5 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigurationService } from 'src/Core/Configuration/Configuration.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
@@ -8,10 +9,12 @@ import { MessageHandler } from './Incoming/Message.handler';
 
 @Injectable()
 export class MessagesService {
+    private readonly logger = new Logger(MessagesService.name);
     public incomingPackets: Map<number, MessageHandler>;
     public packetNames: Map<number, string>;
 
     constructor(
+        private readonly configurationService: ConfigurationService,
         private readonly habboService: HabboService
     ) {
         this.incomingPackets = new Map<number, MessageHandler>();
@@ -33,12 +36,19 @@ export class MessagesService {
 
         if (this.checkRegister(packet.header)) {
             var handler: MessageHandler = this.incomingPackets.get(packet.header);
-            if (handler == null) {
-                return;
+            if (this.configurationService.getBoolean("game.tcp.packets_log") === true) {
+                if (handler == null) {
+                    this.logger.debug("Pacchetto " + packet.header + " non riconosciuto!");
+                    return;
+                }
             }
 
             handler.entryPacket = packet;
             handler.gameClient = client;
+
+            if (this.configurationService.getBoolean("game.tcp.packets_log") === true) {
+                this.logger.debug("Pacchetto " + this.packetNames.get(packet.header) + " eseguito");
+            }
 
             handler.handle();
         }

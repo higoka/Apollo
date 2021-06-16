@@ -1,9 +1,11 @@
 import { OutPacket } from "src/Messages/Outgoing/Out.packet";
 import { DataEncoder } from "src/Networking/Encoder/Data.encoder";
 import * as ws from "ws";
+import { HabboDefs } from "../User/Habbo.defs";
 
 export class GameclientDefs {
     public channel: ws;
+    public habbo: HabboDefs;
 
     constructor(channel: ws) {
         this.channel = channel;

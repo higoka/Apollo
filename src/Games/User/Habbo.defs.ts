@@ -1,4 +1,5 @@
 import { User } from "src/Core/Database/User/User.entity";
+import { GameclientDefs } from "../GameClient/Gameclient.defs";
 
 export class HabboDefs {
     public id: number;
@@ -17,6 +18,7 @@ export class HabboDefs {
     public online: boolean;
     public loadingRoom: number;
     public currentRoom; // TODO: Add the type "Room"
+    public client: GameclientDefs;
 
     constructor(data: User) {
         this.id = data.id;
