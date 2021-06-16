@@ -1,2 +1,2 @@
-# Apollo with Nestjs
+# Apollo
 Apollo Server for Nitro Client
