@@ -36,7 +36,7 @@ export class MessagesService {
 
         if (this.checkRegister(packet.header)) {
             var handler: MessageHandler = this.incomingPackets.get(packet.header);
-            if (this.configurationService.getBoolean("game.tcp.packets_log") === true) {
+            if (this.configurationService.getBoolean("game.tcp.packets_log")) {
                 if (handler == null) {
                     this.logger.debug("Pacchetto " + packet.header + " non riconosciuto!");
                     return;
@@ -46,7 +46,7 @@ export class MessagesService {
             handler.entryPacket = packet;
             handler.gameClient = client;
 
-            if (this.configurationService.getBoolean("game.tcp.packets_log") === true) {
+            if (this.configurationService.getBoolean("game.tcp.packets_log")) {
                 this.logger.debug("Pacchetto " + this.packetNames.get(packet.header) + " eseguito");
             }
 
