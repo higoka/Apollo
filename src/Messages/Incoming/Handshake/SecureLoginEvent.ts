@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common';
 import { HabboDefs } from 'src/Games/User/Habbo.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { LoginOKComposer } from 'src/Messages/Outgoing/Handshake/LoginOKComposer';

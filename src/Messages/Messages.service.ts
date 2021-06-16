@@ -6,6 +6,7 @@ import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { InPacket } from './Incoming/In.packet';
 import { IncomingList } from './Incoming/Incoming.list';
 import { MessageHandler } from './Incoming/Message.handler';
+import { RequestUserDataEvent } from './Incoming/User/RequestUserDataEvent';
 
 @Injectable()
 export class MessagesService {
@@ -60,7 +61,7 @@ export class MessagesService {
     }
 
     registerUsers(): void {
-        
+        this.incomingPackets.set(IncomingList.USER_INFO, new RequestUserDataEvent());
     }
 
     registerNames(): void {
