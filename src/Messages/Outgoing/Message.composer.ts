@@ -1,10 +1,20 @@
+import { OutPacket } from "./Out.packet";
+
 export abstract class MessageComposer {
-    public data: any[];
+    private message: OutPacket;
+    protected response: OutPacket;
 
-    protected abstract composeInternal(): void;
+    constructor() {
+        this.response = new OutPacket();
+    }
 
-    public compose(): any[] {
-        this.composeInternal();
-        return this.data;
+    protected abstract composeInternal(): OutPacket;
+
+    public compose(): OutPacket {
+        if (this.message == null) {
+            this.message = this.composeInternal();
+        }
+
+        return this.message;
     }
 }

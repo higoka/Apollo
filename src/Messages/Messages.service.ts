@@ -8,6 +8,7 @@ import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { InPacket } from './Incoming/In.packet';
 import { IncomingList } from './Incoming/Incoming.list';
 import { MessageHandler } from './Incoming/Message.handler';
+import { RequestUserCurrencyEvent } from './Incoming/User/RequestUserCurrencyEvent';
 import { RequestUserDataEvent } from './Incoming/User/RequestUserDataEvent';
 
 @Injectable()
@@ -65,11 +66,13 @@ export class MessagesService {
 
     registerUsers(): void {
         this.incomingPackets.set(IncomingList.USER_INFO, new RequestUserDataEvent());
+        this.incomingPackets.set(IncomingList.USER_CURRENCY, new RequestUserCurrencyEvent());
     }
 
     registerNames(): void {
         this.packetNames.set(IncomingList.RELEASE_VERSION, "ReleaseVersionEvent");
         this.packetNames.set(IncomingList.SECURITY_TICKET, "SecureLoginEvent");
-        this.packetNames.set(IncomingList.USER_INFO, "UserDataEvent");
+        this.packetNames.set(IncomingList.USER_INFO, "RequestUserDataEvent");
+        this.packetNames.set(IncomingList.USER_CURRENCY, "RequestUserCurrencyEvent");
     }
 }

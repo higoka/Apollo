@@ -1,7 +1,6 @@
 import { HabboDefs } from 'src/Games/User/Habbo.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { LoginOKComposer } from 'src/Messages/Outgoing/Handshake/LoginOKComposer';
-import { OutgoingList } from 'src/Messages/Outgoing/Outgoing.list';
 import { MessageHandler } from "../message.handler";
 
 export class SecureLoginEvent extends MessageHandler {
@@ -29,7 +28,7 @@ export class SecureLoginEvent extends MessageHandler {
                     }
 
                     this.habboService.addHabbo(habbo);
-                    this.gameClient.send(OutgoingList.AUTHENTICATED, new LoginOKComposer().compose());
+                    this.gameClient.send(new LoginOKComposer().compose());
                 }
             });
         }

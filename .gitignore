@@ -1,4 +1,5 @@
 package-lock.json
+run.bat
 node_modules/
 dist/
 .vscode/

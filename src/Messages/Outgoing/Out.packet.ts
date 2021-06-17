@@ -5,6 +5,12 @@ export class OutPacket {
         this.buffer = new Uint8Array();
     }
 
+    public init(header: number): OutPacket {
+        this.writeShort(header);
+
+        return this;
+    }
+
     public writeByte(byte: number): OutPacket {
         const array = new Uint8Array(1);
 
@@ -47,6 +53,16 @@ export class OutPacket {
         return this;
     }
 
+    public writeBoolean(value: boolean): OutPacket {
+        const array = new Uint8Array(1);
+
+        array[0] = (value ? 1 : 0);
+
+        this.appendArray(array);
+
+        return this;
+    }
+
     public writeString(string: string, includeLength: boolean = true): OutPacket {
         const array = new TextEncoder().encode(string);
 
@@ -60,10 +76,11 @@ export class OutPacket {
         return this;
     }
 
-    private appendArray(array: Uint8Array): void {
-        if(!array) return;
+    private appendArray(array: Uint8Array): OutPacket {
+        if (!array)
+            return;
 
-        const mergedArray = new Uint8Array(this.buffer.length + array.length);
+        const mergedArray: Uint8Array = new Uint8Array(this.buffer.length + array.length);
 
         mergedArray.set(this.buffer);
         mergedArray.set(array, this.buffer.length);
@@ -73,6 +90,11 @@ export class OutPacket {
 
     public get getBuffer(): ArrayBufferLike {
         return this.buffer.buffer;
+    }
+
+    public encode(): OutPacket {
+        const buffer: ArrayBufferLike = this.getBuffer;
+        return new OutPacket().writeInt(buffer.byteLength).writeBytes(buffer);
     }
 
     public toString(encoding?: string): string {
