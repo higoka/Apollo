@@ -11,6 +11,6 @@ export class UserDataComposer extends MessageComposer {
     }
 
     protected composeInternal(): void {
-        this.data = [ this.habbo.habboInfo.id, this.habbo.habboInfo.username, this.habbo.habboInfo.look, this.habbo.habboInfo.gender, this.habbo.habboInfo.motto, this.habbo.habboInfo.username, false, 0, 0, 0, false, this.habbo.habboInfo.accountCreated, false, false ];
+        this.data = [ this.habbo.habboInfo.id, this.habbo.habboInfo.username, this.habbo.habboInfo.look, this.habbo.habboInfo.gender, this.habbo.habboInfo.motto, this.habbo.habboInfo.username, false, 0, 0, 0, false, "01-01-1970 00:00:00", false, false ];
     }
 }

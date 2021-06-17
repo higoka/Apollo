@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigurationService } from 'src/Core/Configuration/Configuration.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
+import { PingEvent } from './Incoming/Handshake/PingEvent';
+import { ReleaseVersionEvent } from './Incoming/Handshake/ReleaseVersionEvent';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { InPacket } from './Incoming/In.packet';
 import { IncomingList } from './Incoming/Incoming.list';
@@ -56,8 +58,9 @@ export class MessagesService {
     }
 
     registerHandshake(): void {
-        //this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
+        this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
         this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.habboService));
+        this.incomingPackets.set(IncomingList.CLIENT_LATENCY, new PingEvent());
     }
 
     registerUsers(): void {

@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigurationModule } from 'src/Core/Configuration/Configuration.module';
 import { HabboModule } from 'src/Games/User/Habbo.module';
+import { PingEvent } from './Incoming/Handshake/PingEvent';
+import { ReleaseVersionEvent } from './Incoming/Handshake/ReleaseVersionEvent';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
+import { RequestUserDataEvent } from './Incoming/User/RequestUserDataEvent';
 import { MessagesService } from './Messages.service';
 
 @Module({
@@ -11,11 +14,13 @@ import { MessagesService } from './Messages.service';
     ],
     providers: [
         MessagesService,
-        SecureLoginEvent
+        ReleaseVersionEvent,
+        SecureLoginEvent,
+        PingEvent,
+        RequestUserDataEvent
     ],
     exports: [
-        MessagesService,
-        SecureLoginEvent
+        MessagesService
     ]
 })
 export class MessagesModule {}
