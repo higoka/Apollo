@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseProvider } from '../Database.provider';
 import { Repository } from 'typeorm';
-import { User } from "./User.entity";
+import { UserEntity } from "./User.entity";
+import { UserCurrencyEntity } from './UserCurrency.entity';
 
 @Injectable()
 export class UserProvider {
@@ -11,7 +12,11 @@ export class UserProvider {
         
     }
 
-    get userRepository(): Repository<User> {
-        return this.databaseProvider.getConnection().getRepository(User);
+    get userRepository(): Repository<UserEntity> {
+        return this.databaseProvider.getConnection().getRepository(UserEntity);
+    }
+
+    get userCurrencyRepository(): Repository<UserCurrencyEntity> {
+        return this.databaseProvider.getConnection().getRepository(UserCurrencyEntity);
     }
 }

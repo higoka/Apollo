@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { createConnection, getConnectionManager, getConnection, Connection } from 'typeorm';
 import { ConfigurationService } from '../Configuration/Configuration.service';
-import { User } from './User/User.entity';
+import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
+import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
+import { UserEntity } from './User/User.entity';
+import { UserCurrencyEntity } from './User/UserCurrency.entity';
 
 @Injectable()
 export class DatabaseProvider {
@@ -21,7 +24,10 @@ export class DatabaseProvider {
             password: this.configurationService.getString("database.psw"),
             database: this.configurationService.getString("database.source"),
             entities: [
-                User
+                UserEntity,
+                UserCurrencyEntity,
+                EmulatorSettingsEntity,
+                EmulatorTextsEntity
             ],
             synchronize: false,
         });

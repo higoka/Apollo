@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { User } from 'src/Core/Database/User/User.entity';
+import { UserEntity } from 'src/Core/Database/User/User.entity';
 import { UserService } from "src/Core/Database/User/User.service";
 import { GameclientService } from '../GameClient/Gameclient.service';
 import { HabboDefs } from './Habbo.defs';
@@ -19,7 +19,7 @@ export class HabboService {
     async loadHabbo(sso: string): Promise<HabboDefs> {
         var habbo: HabboDefs;
         var userId: number;
-        return this.userService.findBySSO(sso).then((user: User) => {
+        return this.userService.findBySSO(sso).then((user: UserEntity) => {
             userId = user.id;
 
             

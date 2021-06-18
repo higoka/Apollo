@@ -1,4 +1,4 @@
-import { User } from "src/Core/Database/User/User.entity";
+import { UserEntity } from "src/Core/Database/User/User.entity";
 
 export class HabboInfoDefs {
     public id: number;
@@ -18,7 +18,7 @@ export class HabboInfoDefs {
     public loadingRoom: number;
     public currentRoom; // TODO: Add type "Room"
 
-    constructor(data: User) {
+    constructor(data: UserEntity) {
         this.id = data.id;
         this.username = data.username;
         this.motto = data.motto;

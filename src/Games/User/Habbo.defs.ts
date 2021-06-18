@@ -1,4 +1,4 @@
-import { User } from "src/Core/Database/User/User.entity";
+import { UserEntity } from "src/Core/Database/User/User.entity";
 import { GameclientDefs } from "../GameClient/Gameclient.defs";
 import { HabboInfoDefs } from "./HabboInfo.defs";
 import { HabboStatsDefs } from "./HabboStats.defs";
@@ -8,7 +8,7 @@ export class HabboDefs {
     public habboInfo: HabboInfoDefs;
     public habboStats: HabboStatsDefs;
 
-    constructor(data: User) {
+    constructor(data: UserEntity) {
         this.client = null;
         this.habboInfo = new HabboInfoDefs(data);
         this.habboStats = HabboStatsDefs.load(this.habboInfo);

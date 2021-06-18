@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigurationService } from 'src/Core/Configuration/Configuration.service';
+import { EmulatorService } from 'src/Core/Database/Emulator/Emulator.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { PingEvent } from './Incoming/Handshake/PingEvent';
