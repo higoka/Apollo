@@ -1,4 +1,6 @@
 import { UserEntity } from "src/Core/Database/User/User.entity";
+import { UserService } from "src/Core/Database/User/User.service";
+import { UserCurrencyEntity } from "src/Core/Database/User/UserCurrency.entity";
 
 export class HabboInfoDefs {
     public id: number;
@@ -17,6 +19,7 @@ export class HabboInfoDefs {
     public online: boolean;
     public loadingRoom: number;
     public currentRoom; // TODO: Add type "Room"
+    public currencies: Map<number, number>;
 
     constructor(data: UserEntity) {
         this.id = data.id;
@@ -33,5 +36,19 @@ export class HabboInfoDefs {
         this.lastOnline = data.last_online;
         this.homeRoom = data.home_room;
         this.online = !!data.online;
+    }
+
+    public async loadCurrencies(userService: UserService): Promise<void> {
+        this.currencies = new Map<number, number>();
+
+        return userService.findCurrencyByUserId(this.id).then((currencies: UserCurrencyEntity[]) => {
+            currencies.forEach((currency: UserCurrencyEntity) => {
+                this.currencies.set(currency.type, currency.amount);
+            });
+        });
+    }
+
+    public getCurrencyAmount(type: number): number {
+        return this.currencies.get(type);
     }
 }

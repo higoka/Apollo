@@ -51,6 +51,7 @@ export class MessagesService {
             handler.entryPacket = packet;
             handler.gameClient = client;
 
+
             if (this.configurationService.getBoolean("game.tcp.packets_log")) {
                 this.logger.debug("Pacchetto " + this.packetNames.get(packet.header) + " eseguito");
             }

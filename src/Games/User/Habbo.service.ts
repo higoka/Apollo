@@ -24,6 +24,7 @@ export class HabboService {
 
             
             habbo = new HabboDefs(user);
+            habbo.habboInfo.loadCurrencies(this.userService);
 
             // TODO: Check ban when user login
 

@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserEntity } from './User.entity';
 import { UserProvider } from './User.provider';
 import { UserCurrencyEntity } from './UserCurrency.entity';

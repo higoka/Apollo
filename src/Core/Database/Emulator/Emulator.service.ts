@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EmulatorProvider } from './Emulator.provider';
 import { EmulatorSettingsEntity } from './EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './EmulatorTexts.entity';
