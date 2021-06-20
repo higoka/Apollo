@@ -5,6 +5,7 @@ import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
 import { UserEntity } from './User/User.entity';
 import { UserCurrencyEntity } from './User/UserCurrency.entity';
+import { UserPermissionEntity } from './User/UserPermission.entity';
 
 @Injectable()
 export class DatabaseProvider {
@@ -26,6 +27,7 @@ export class DatabaseProvider {
             entities: [
                 UserEntity,
                 UserCurrencyEntity,
+                UserPermissionEntity,
                 EmulatorSettingsEntity,
                 EmulatorTextsEntity
             ],
@@ -33,7 +35,7 @@ export class DatabaseProvider {
         });
     }
 
-    getConnection(): any {
+    async getConnection(): Promise<Connection> {
         if (getConnectionManager().has("Apollo")) {
             if (getConnection("Apollo").isConnected) {
                 return getConnection("Apollo");

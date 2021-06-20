@@ -12,7 +12,8 @@ export class HabboInfoDefs {
     public ipRegister: string;
     public ipCurrent: string;
     public accountCreated: string;
-    public rank: any; // TODO: Change type
+    public rankId: number;
+    public rank: number; // TODO: Add type "Rank"
     public credits: number;
     public lastOnline: string;
     public homeRoom: number;
@@ -31,7 +32,7 @@ export class HabboInfoDefs {
         this.ipRegister = data.ip_register;
         this.ipCurrent = data.ip_current;
         this.accountCreated = data.account_created;
-        this.rank = data.rank;
+        this.rankId = data.rank;
         this.credits = data.credits;
         this.lastOnline = data.last_online;
         this.homeRoom = data.home_room;

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { EmulatorProvider } from './Emulator.provider';
 import { EmulatorSettingsEntity } from './EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './EmulatorTexts.entity';
@@ -12,7 +13,8 @@ export class EmulatorService {
     }
 
     async getSettingsByKey(chiave: string): Promise<EmulatorSettingsEntity> {
-        return this.emulatorProvider.EmulatorSettingsRepository.findOne({
+        var repository: Repository<EmulatorSettingsEntity> = await this.emulatorProvider.EmulatorSettingsRepository;
+        return repository.findOne({
             select: ['value'],
             where: { 
                 key: chiave
@@ -21,7 +23,8 @@ export class EmulatorService {
     }
 
     async getTextsByKey(chiave: string): Promise<EmulatorTextsEntity> {
-        return this.emulatorProvider.EmulatorTextsRepository.findOne({
+        var repository: Repository<EmulatorTextsEntity> = await this.emulatorProvider.EmulatorSettingsRepository;
+        return repository.findOne({
             select: ['value'],
             where: { 
                 key: chiave

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseProvider } from '../Database.provider';
-import { Repository } from 'typeorm';
+import { Connection, Repository, SelectQueryBuilder } from 'typeorm';
 import { UserEntity } from "./User.entity";
 import { UserCurrencyEntity } from './UserCurrency.entity';
+import { UserPermissionEntity } from './UserPermission.entity';
 
 @Injectable()
 export class UserProvider {
@@ -12,11 +13,21 @@ export class UserProvider {
         
     }
 
-    get userRepository(): Repository<UserEntity> {
-        return this.databaseProvider.getConnection().getRepository(UserEntity);
+    get userRepository(): Promise<Repository<UserEntity>> {
+        return this.databaseProvider.getConnection().then((conn: Connection) => {
+            return conn.getRepository(UserEntity);
+        });
     }
 
-    get userCurrencyRepository(): Repository<UserCurrencyEntity> {
-        return this.databaseProvider.getConnection().getRepository(UserCurrencyEntity);
+    get userCurrencyRepository(): Promise<Repository<UserCurrencyEntity>> {
+        return this.databaseProvider.getConnection().then((conn: Connection) => {
+            return conn.getRepository(UserCurrencyEntity);
+        });
+    }
+
+    get userPermissionRepository(): Promise<Repository<UserPermissionEntity>> {
+        return this.databaseProvider.getConnection().then((conn: Connection) => {
+            return conn.getRepository(UserPermissionEntity);
+        });
     }
 }

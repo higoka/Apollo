@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseProvider } from '../Database.provider';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { EmulatorSettingsEntity } from './EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './EmulatorTexts.entity';
 
@@ -12,11 +12,15 @@ export class EmulatorProvider {
         
     }
 
-    get EmulatorSettingsRepository(): Repository<EmulatorSettingsEntity> {
-        return this.databaseProvider.getConnection().getRepository(EmulatorSettingsEntity);
+    get EmulatorSettingsRepository(): Promise<Repository<EmulatorSettingsEntity>> {
+        return this.databaseProvider.getConnection().then((conn: Connection) => {
+            return conn.getRepository(EmulatorSettingsEntity);
+        });
     }
 
-    get EmulatorTextsRepository(): Repository<EmulatorTextsEntity> {
-        return this.databaseProvider.getConnection().getRepository(EmulatorTextsEntity);
+    get EmulatorTextsRepository(): Promise<Repository<EmulatorTextsEntity>> {
+        return this.databaseProvider.getConnection().then((conn: Connection) => {
+            return conn.getRepository(EmulatorTextsEntity);
+        });
     }
 }

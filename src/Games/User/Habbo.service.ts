@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common';
 import { UserEntity } from 'src/Core/Database/User/User.entity';
 import { UserService } from "src/Core/Database/User/User.service";
 import { GameclientService } from '../GameClient/Gameclient.service';
