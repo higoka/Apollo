@@ -43,7 +43,7 @@ export class MessagesService {
             var handler: MessageHandler = this.incomingPackets.get(packet.header);
             if (this.configurationService.getBoolean("game.tcp.packets_log")) {
                 if (handler == null) {
-                    this.logger.debug("Pacchetto " + packet.header + " non riconosciuto!");
+                    this.logger.debug("Unrecognized packet " + packet.header);
                     return;
                 }
             }
@@ -53,7 +53,7 @@ export class MessagesService {
 
 
             if (this.configurationService.getBoolean("game.tcp.packets_log")) {
-                this.logger.debug("Pacchetto " + this.packetNames.get(packet.header) + " eseguito");
+                this.logger.debug("Packet " + this.packetNames.get(packet.header) + " readed and executed");
             }
 
             handler.handle();

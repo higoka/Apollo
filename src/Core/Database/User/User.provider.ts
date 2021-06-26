@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseProvider } from '../Database.provider';
-import { Connection, Repository, SelectQueryBuilder } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { UserEntity } from "./User.entity";
 import { UserCurrencyEntity } from './UserCurrency.entity';
 import { UserPermissionEntity } from './UserPermission.entity';
