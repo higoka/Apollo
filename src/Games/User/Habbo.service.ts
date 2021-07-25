@@ -18,11 +18,7 @@ export class HabboService {
 
     async loadHabbo(sso: string): Promise<HabboDefs> {
         var habbo: HabboDefs;
-        var userId: number;
-        return this.userService.findBySSO(sso).then((user: UserEntity) => {
-            userId = user.id;
-
-            
+        return this.userService.findBySSO(sso).then((user: UserEntity) => {           
             habbo = new HabboDefs(user);
             habbo.habboInfo.loadCurrencies(this.userService);
 

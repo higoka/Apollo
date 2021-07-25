@@ -4,7 +4,7 @@ import { GameclientDefs } from "./Gameclient.defs";
 
 @Injectable()
 export class GameclientService {
-    public users: Map<string, GameclientDefs> = null;
+    public users: Map<string, GameclientDefs>;
 
     constructor() {
         this.users = new Map<string, GameclientDefs>();
