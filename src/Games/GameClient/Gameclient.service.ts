@@ -21,7 +21,6 @@ export class GameclientService {
                 return;
             }
 
-            console.log(client.habbo);
             if (client.habbo.habboInfo.id == userId) {
                 return client.habbo;
             }

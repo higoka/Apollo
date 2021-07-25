@@ -12,9 +12,6 @@ import { HabboStatsDefs } from './HabboStats.defs';
         UserModule
     ],
     providers: [
-        HabboDefs,
-        HabboInfoDefs,
-        HabboStatsDefs,
         HabboService
     ],
     exports: [

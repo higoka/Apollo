@@ -23,8 +23,8 @@ export class NetworkingProvider {
         server.on('connection', function connection(ws, req) {
             self.gameclientService.addUser(req.headers['sec-websocket-key'], ws);  
             ws.binaryType = 'arraybuffer';
-            ws.onmessage = function(event: ws.MessageEvent) {
-                var inPacket: InPacket = new InPacket(event.data);
+            ws.onmessage = function(incoming: ws.MessageEvent) {
+                var inPacket: InPacket = new InPacket(incoming.data);
                 inPacket.readInt();
                 var packetId: number = inPacket.readShort();
                 inPacket.header = packetId;
