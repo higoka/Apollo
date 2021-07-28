@@ -1,8 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigurationService } from 'src/Core/Configuration/Configuration.service';
 import { EmulatorService } from 'src/Core/Database/Emulator/Emulator.service';
+import { GameService } from 'src/Games/Game.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
+import { RequestCatalogModeEvent } from './Incoming/Catalog/RequestCatalogModeEvent';
 import { PingEvent } from './Incoming/Handshake/PingEvent';
 import { ReleaseVersionEvent } from './Incoming/Handshake/ReleaseVersionEvent';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
@@ -20,21 +22,22 @@ export class MessagesService {
 
     constructor(
         private readonly configurationService: ConfigurationService,
-        private readonly habboService: HabboService
+        private readonly gameService: GameService
     ) {
         this.incomingPackets = new Map<number, MessageHandler>();
         this.packetNames = new Map<number, string>();
 
         this.registerHandshake();
-        this.registerUsers();
+        this.registerUser();
+        this.registerCatalog();
         this.registerNames();
     }
 
-    checkRegister(packetId: number): boolean {
+    private checkRegister(packetId: number): boolean {
         return this.incomingPackets.has(packetId);
     }
 
-    handlePacket(client: GameclientDefs, packet: InPacket): void {
+    public handlePacket(client: GameclientDefs, packet: InPacket): void {
         if (client == null) {
             return;
         }
@@ -60,15 +63,19 @@ export class MessagesService {
         }
     }
 
-    registerHandshake(): void {
+    private registerHandshake(): void {
         this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
-        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.habboService));
+        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.gameService.habboServices));
         this.incomingPackets.set(IncomingList.CLIENT_LATENCY, new PingEvent());
     }
 
-    registerUsers(): void {
+    private registerUser(): void {
         this.incomingPackets.set(IncomingList.USER_INFO, new RequestUserDataEvent());
         this.incomingPackets.set(IncomingList.USER_CURRENCY, new RequestUserCurrencyEvent());
+    }
+
+    private registerCatalog(): void {
+        this.incomingPackets.set(IncomingList.CATALOG_MODE, new RequestCatalogModeEvent(this.gameService.catalogueServices));
     }
 
     registerNames(): void {
@@ -76,5 +83,6 @@ export class MessagesService {
         this.packetNames.set(IncomingList.SECURITY_TICKET, "SecureLoginEvent");
         this.packetNames.set(IncomingList.USER_INFO, "RequestUserDataEvent");
         this.packetNames.set(IncomingList.USER_CURRENCY, "RequestUserCurrencyEvent");
+        this.packetNames.set(IncomingList.CATALOG_MODE, "RequestCatalogModeEvent");
     }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { createConnection, getConnectionManager, getConnection, Connection } from 'typeorm';
 import { ConfigurationService } from '../Configuration/Configuration.service';
+import { CatalogItemsEntity } from './Catalog/CatalogItems.entity';
+import { CatalogPagesEntity } from './Catalog/CatalogPages.entity';
 import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
 import { UserEntity } from './User/User.entity';
@@ -29,7 +31,9 @@ export class DatabaseProvider {
                 UserCurrencyEntity,
                 UserPermissionEntity,
                 EmulatorSettingsEntity,
-                EmulatorTextsEntity
+                EmulatorTextsEntity,
+                CatalogPagesEntity,
+                CatalogItemsEntity
             ],
             synchronize: false,
         });

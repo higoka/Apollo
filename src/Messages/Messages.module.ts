@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigurationModule } from 'src/Core/Configuration/Configuration.module';
+import { GameModule } from 'src/Games/Game.module';
 import { HabboModule } from 'src/Games/User/Habbo.module';
 import { PingEvent } from './Incoming/Handshake/PingEvent';
 import { ReleaseVersionEvent } from './Incoming/Handshake/ReleaseVersionEvent';
@@ -11,7 +12,8 @@ import { MessagesService } from './Messages.service';
 @Module({
     imports: [
         HabboModule,
-        ConfigurationModule
+        ConfigurationModule,
+        GameModule
     ],
     providers: [
         MessagesService,
