@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CatalogueModule } from './Catalogue/Catalogue.module';
+import { FurnitureModule } from './Furniture/Furniture.module';
 import { GameService } from './Game.service';
 import { GameclientModule } from './GameClient/Gameclient.module';
 import { NavigationModule } from './Navigation/Navigation.module';
@@ -10,7 +11,8 @@ import { HabboModule } from './User/Habbo.module';
         GameclientModule,
         HabboModule,
         CatalogueModule,
-        NavigationModule
+        NavigationModule,
+        FurnitureModule
     ],
     providers: [
         GameService

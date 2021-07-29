@@ -24,7 +24,7 @@ export class CataloguePageDefs {
     public textDetails: string;
     public textTeaser: string;
 
-    constructor(data?: CatalogPagesEntity) {
+    public initData(data: CatalogPagesEntity): this {
         this.id = data.id;
         this.parentId = data.parent_id;
         this.rank = data.min_rank;
@@ -44,6 +44,7 @@ export class CataloguePageDefs {
         this.textTwo = data.page_text2;
         this.textDetails = data.page_text_details;
         this.textTeaser = data.page_text_teaser;
+        return this;
     }
 
     public addItem(item: CatalogueItemDefs): void {

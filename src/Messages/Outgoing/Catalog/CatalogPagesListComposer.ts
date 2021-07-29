@@ -19,7 +19,7 @@ export class CatalogPagesListComposer extends MessageComposer {
     }
 
     protected composeInternal(): OutPacket {
-        var pages: Array<CataloguePageDefs> = this.catalogueService.getCatalogPages(2, this.habbo);
+        var pages: Array<CataloguePageDefs> = this.catalogueService.getCatalogPages(-1, this.habbo);
 
         this.response.init(OutgoingList.CATALOG_PAGES);
 

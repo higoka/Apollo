@@ -5,6 +5,7 @@ import { GameService } from 'src/Games/Game.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { RequestCatalogModeEvent } from './Incoming/Catalog/RequestCatalogModeEvent';
+import { RequestCatalogPageEvent } from './Incoming/Catalog/RequestCatalogPageEvent';
 import { PingEvent } from './Incoming/Handshake/PingEvent';
 import { ReleaseVersionEvent } from './Incoming/Handshake/ReleaseVersionEvent';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
@@ -76,6 +77,7 @@ export class MessagesService {
 
     private registerCatalog(): void {
         this.incomingPackets.set(IncomingList.CATALOG_MODE, new RequestCatalogModeEvent(this.gameService.catalogueServices));
+        this.incomingPackets.set(IncomingList.CATALOG_PAGE, new RequestCatalogPageEvent(this.gameService.catalogueServices));
     }
 
     registerNames(): void {
@@ -84,5 +86,6 @@ export class MessagesService {
         this.packetNames.set(IncomingList.USER_INFO, "RequestUserDataEvent");
         this.packetNames.set(IncomingList.USER_CURRENCY, "RequestUserCurrencyEvent");
         this.packetNames.set(IncomingList.CATALOG_MODE, "RequestCatalogModeEvent");
+        this.packetNames.set(IncomingList.CATALOG_PAGE, "RequestCatalogPageEvent");
     }
 }

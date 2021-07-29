@@ -6,7 +6,7 @@ export class CatalogItemsEntity {
     id: number;
 
     @Column()
-    item_ids: number;
+    item_ids: string;
 
     @Column()
     page_id: number;

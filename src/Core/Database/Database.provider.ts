@@ -5,6 +5,7 @@ import { CatalogItemsEntity } from './Catalog/CatalogItems.entity';
 import { CatalogPagesEntity } from './Catalog/CatalogPages.entity';
 import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
+import { ItemsBaseEntity } from './Items/ItemsBase.entity';
 import { UserEntity } from './User/User.entity';
 import { UserCurrencyEntity } from './User/UserCurrency.entity';
 import { UserPermissionEntity } from './User/UserPermission.entity';
@@ -33,7 +34,8 @@ export class DatabaseProvider {
                 EmulatorSettingsEntity,
                 EmulatorTextsEntity,
                 CatalogPagesEntity,
-                CatalogItemsEntity
+                CatalogItemsEntity,
+                ItemsBaseEntity
             ],
             synchronize: false,
         });

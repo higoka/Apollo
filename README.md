@@ -2,7 +2,7 @@
 Apollo is a server of emulation for nitro client
 
 ## Server Discord
-Join in the discord of Apollo's project: https://discord.gg/dxHEwTUFF6
+Join in the discord of Apollo's project: https://discord.gg/jX7dd6Pgrd
 
 ## Technology
 - NodeJS

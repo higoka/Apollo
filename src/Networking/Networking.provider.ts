@@ -5,6 +5,7 @@ import { GameclientService } from "src/Games/GameClient/Gameclient.service";
 import { InPacket } from "src/Messages/Incoming/In.packet";
 import { MessagesService } from "src/Messages/Messages.service";
 import * as ws from "ws";
+import * as http from "http";
 
 @Injectable()
 export class NetworkingProvider {
@@ -20,7 +21,7 @@ export class NetworkingProvider {
 
         var self = this;
 
-        server.on('connection', function connection(ws, req) {
+        server.on('connection', function connection(ws: ws, req: http.IncomingMessage) {
             self.gameclientService.addUser(req.headers['sec-websocket-key'], ws);  
             ws.binaryType = 'arraybuffer';
             ws.onmessage = function(incoming: ws.MessageEvent) {
