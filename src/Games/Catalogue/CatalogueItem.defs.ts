@@ -99,22 +99,38 @@ export class CatalogueItemDefs {
                     }
                 }
             }
-
-            out.writeInt(this.clubOnly);
-            out.writeBoolean(true);
-            out.writeBoolean(false);
-            out.writeString(this.name + ".png");
         });
+
+        out.writeInt(this.clubOnly);
+        out.writeBoolean(true);
+        out.writeBoolean(false);
+        out.writeString(this.name + ".png");
     }
 
     public getBaseItems(): Array<FurnitureBaseDefs> {
         var items: Array<FurnitureBaseDefs> = new Array<FurnitureBaseDefs>();
 
         if (!this.itemId != null) {
-            var item: FurnitureBaseDefs = this.furnitureService.items.get(parseInt(this.itemId));
+            var itemIds: Array<string> = this.itemId.split(";");
 
-            if (item != null) {
-                items.push(item);
+            for (var itemId of itemIds) {
+                if (itemId == null) {
+                    return;
+                }
+
+                if (itemId.includes(":")) {
+                    itemId = itemId.split(":")[0];
+                }
+
+                var identifier: number = parseInt(itemId);
+
+                if (identifier > 0) {
+                    var item: FurnitureBaseDefs = this.furnitureService.items.get(identifier);
+
+                    if (item != null) {
+                        items.push(item);
+                    }
+                }
             }
         }
 

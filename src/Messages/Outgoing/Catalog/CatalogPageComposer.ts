@@ -26,6 +26,7 @@ export class CatalogPageComposer extends MessageComposer {
         this.response.writeString(this.mode);
 
         this.response.writeInt(this.page.pagesItems.size);
+
         this.page.pagesItems.forEach((item: CatalogueItemDefs) => {
             item.serialize(this.response);
         });

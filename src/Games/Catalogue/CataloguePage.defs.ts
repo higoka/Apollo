@@ -1,4 +1,5 @@
 import { CatalogPagesEntity } from "src/Core/Database/Catalog/CatalogPages.entity";
+import { OutPacket } from "src/Messages/Outgoing/Out.packet";
 import { CatalogueItemDefs } from "./CatalogueItem.defs";
 
 export class CataloguePageDefs {
