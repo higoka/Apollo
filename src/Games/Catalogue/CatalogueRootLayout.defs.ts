@@ -1,9 +1,9 @@
-import { CataloguePageDefs } from "../CataloguePage.defs";
+import { CataloguePageDefs } from "./CataloguePage.defs";
 
-export class CatalogRootLayout extends CataloguePageDefs {
+export class CatalogueRootLayoutDefs extends CataloguePageDefs {
     constructor() {
         super();
-    
+
         this.id = -1;
         this.parentId = -2;
         this.rank = 0;

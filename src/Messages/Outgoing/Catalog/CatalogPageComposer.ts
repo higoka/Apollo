@@ -25,11 +25,21 @@ export class CatalogPageComposer extends MessageComposer {
         this.response.writeInt(this.page.id);
         this.response.writeString(this.mode);
 
+        this.response.writeString(this.page.layout);
+        this.response.writeInt(3);
+        this.response.writeString(this.page.headerImage);
+        this.response.writeString(this.page.teaserImage);
+        this.response.writeString(this.page.specialImage);
+        this.response.writeInt(3);
+        this.response.writeString(this.page.textOne);
+        this.response.writeString(this.page.textDetails);
+        this.response.writeString(this.page.textTeaser);
+
         this.response.writeInt(this.page.pagesItems.size);
 
-        this.page.pagesItems.forEach((item: CatalogueItemDefs) => {
+        for (var item of this.page.pagesItems.values()) {
             item.serialize(this.response);
-        });
+        }
 
         this.response.writeInt(0);
         this.response.writeBoolean(false);

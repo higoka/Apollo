@@ -20,9 +20,9 @@ export class CatalogueItemDefs {
     public extradata: string;
     public clubOnly: number;
     public haveOffer: boolean;
-    private furnitureService: FurnitureService;
+    public furnitureService: FurnitureService;
 
-    constructor(furnitureService: FurnitureService) {
+    constructor(furnitureService?: FurnitureService) {
         this.furnitureService = furnitureService;
     }
 

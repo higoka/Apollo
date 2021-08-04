@@ -59,4 +59,8 @@ export class CataloguePageDefs {
     public get allChildPages(): Map<number, this> {
         return this.childPages;
     }
+
+    public serialize(out: OutPacket): void {
+
+    }
 }
