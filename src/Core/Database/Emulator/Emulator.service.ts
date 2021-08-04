@@ -15,7 +15,6 @@ export class EmulatorService {
     async getSettingsByKey(chiave: string): Promise<EmulatorSettingsEntity> {
         var repository: Repository<EmulatorSettingsEntity> = await this.emulatorProvider.EmulatorSettingsRepository;
         return repository.findOne({
-            select: ['value'],
             where: { 
                 key: chiave
             }
@@ -23,9 +22,8 @@ export class EmulatorService {
     }
 
     async getTextsByKey(chiave: string): Promise<EmulatorTextsEntity> {
-        var repository: Repository<EmulatorTextsEntity> = await this.emulatorProvider.EmulatorSettingsRepository;
+        var repository: Repository<EmulatorTextsEntity> = await this.emulatorProvider.EmulatorTextsRepository;
         return repository.findOne({
-            select: ['value'],
             where: { 
                 key: chiave
             }

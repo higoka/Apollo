@@ -1,5 +1,3 @@
-import { CatalogueService } from "src/Games/Catalogue/Catalogue.service";
-import { CatalogueItemDefs } from "src/Games/Catalogue/CatalogueItem.defs";
 import { CataloguePageDefs } from "src/Games/Catalogue/CataloguePage.defs";
 import { HabboDefs } from "src/Games/User/Habbo.defs";
 import { MessageComposer } from "../Message.composer";

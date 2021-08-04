@@ -23,7 +23,8 @@ export class MessagesService {
 
     constructor(
         private readonly configurationService: ConfigurationService,
-        private readonly gameService: GameService
+        private readonly gameService: GameService,
+        private readonly emulatorService: EmulatorService
     ) {
         this.incomingPackets = new Map<number, MessageHandler>();
         this.packetNames = new Map<number, string>();
@@ -66,7 +67,7 @@ export class MessagesService {
 
     private registerHandshake(): void {
         this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
-        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.gameService.habboServices));
+        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.gameService.habboServices, this.emulatorService));
         this.incomingPackets.set(IncomingList.CLIENT_LATENCY, new PingEvent());
     }
 
