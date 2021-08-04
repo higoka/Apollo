@@ -39,21 +39,22 @@ export class SecureLoginEvent extends MessageHandler {
                     this.gameClient.send(new LoginOKComposer().compose());
                     this.gameClient.send(new UserPermissionComposer(this.gameClient.habbo).compose());
                     this.gameClient.send(new AvailabilityStatusMessageComposer(true, false, true).compose());
-                    this.gameClient.send(new PingComposer().compose());
 
-                    this.emulatorService.getSettingsByKey("hotel.welcome.alert.enabled").then((result: EmulatorSettingsEntity) => {
-                        if (parseInt(result.value) == 1) {
-                            this.emulatorService.getSettingsByKey("hotel.welcome.alert.oldstyle").then((stile: EmulatorSettingsEntity) => {
-                                this.emulatorService.getSettingsByKey("hotel.welcome.alert.message").then((message: EmulatorSettingsEntity) => {
-                                    if (parseInt(stile.value) == 1) {
-                                        this.gameClient.send(new MessagesForYouComposer(message.value.replace("%user%", this.gameClient.habbo.habboInfo.username).split("<br/>")).compose());
-                                    } else {
-                                        this.gameClient.send(new GenericAlertComposer(message.value.replace("%user%", this.gameClient.habbo.habboInfo.username)).compose());
-                                    }
+                    setTimeout(() => {
+                        this.emulatorService.getSettingsByKey("hotel.welcome.alert.enabled").then((result: EmulatorSettingsEntity) => {
+                            if (parseInt(result.value) == 1) {
+                                this.emulatorService.getSettingsByKey("hotel.welcome.alert.oldstyle").then((stile: EmulatorSettingsEntity) => {
+                                    this.emulatorService.getSettingsByKey("hotel.welcome.alert.message").then((message: EmulatorSettingsEntity) => {
+                                        if (parseInt(stile.value) == 1) {
+                                            this.gameClient.send(new MessagesForYouComposer(message.value.replace("%user%", this.gameClient.habbo.habboInfo.username).split("<br/>")).compose());
+                                        } else {
+                                            this.gameClient.send(new GenericAlertComposer(message.value.replace("%user%", this.gameClient.habbo.habboInfo.username)).compose());
+                                        }
+                                    });
                                 });
-                            });
-                        }
-                    });
+                            }
+                        })
+                    }, 5000);
                 }
             });
         }
