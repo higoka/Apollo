@@ -3,7 +3,6 @@ import { ConfigurationService } from 'src/Core/Configuration/Configuration.servi
 import { EmulatorService } from 'src/Core/Database/Emulator/Emulator.service';
 import { GameService } from 'src/Games/Game.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
-import { HabboService } from 'src/Games/User/Habbo.service';
 import { RequestCatalogModeEvent } from './Incoming/Catalog/RequestCatalogModeEvent';
 import { RequestCatalogPageEvent } from './Incoming/Catalog/RequestCatalogPageEvent';
 import { PingEvent } from './Incoming/Handshake/PingEvent';
@@ -48,7 +47,7 @@ export class MessagesService {
             var handler: MessageHandler = this.incomingPackets.get(packet.header);
             if (this.configurationService.getBoolean("game.tcp.packets_log")) {
                 if (handler == null) {
-                    this.logger.debug("Unrecognized packet " + packet.header);
+                    this.logger.debug("Unrecognized packet: " + packet.header);
                     return;
                 }
             }
@@ -81,9 +80,10 @@ export class MessagesService {
         this.incomingPackets.set(IncomingList.CATALOG_PAGE, new RequestCatalogPageEvent(this.gameService.catalogueServices));
     }
 
-    registerNames(): void {
+    private registerNames(): void {
         this.packetNames.set(IncomingList.RELEASE_VERSION, "ReleaseVersionEvent");
         this.packetNames.set(IncomingList.SECURITY_TICKET, "SecureLoginEvent");
+        this.packetNames.set(IncomingList.CLIENT_LATENCY, "PingEvent");
         this.packetNames.set(IncomingList.USER_INFO, "RequestUserDataEvent");
         this.packetNames.set(IncomingList.USER_CURRENCY, "RequestUserCurrencyEvent");
         this.packetNames.set(IncomingList.CATALOG_MODE, "RequestCatalogModeEvent");
