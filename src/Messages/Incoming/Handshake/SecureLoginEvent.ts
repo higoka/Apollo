@@ -39,6 +39,7 @@ export class SecureLoginEvent extends MessageHandler {
                     this.gameClient.send(new LoginOKComposer().compose());
                     this.gameClient.send(new UserPermissionComposer(this.gameClient.habbo).compose());
                     this.gameClient.send(new AvailabilityStatusMessageComposer(true, false, true).compose());
+                    this.gameClient.send(new PingComposer().compose());
 
                     setTimeout(() => {
                         this.emulatorService.getSettingsByKey("hotel.welcome.alert.enabled").then((result: EmulatorSettingsEntity) => {

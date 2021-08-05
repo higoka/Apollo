@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ConfigurationService } from "src/Core/Configuration/Configuration.service";
 import { GameclientDefs } from "src/Games/GameClient/Gameclient.defs";
 import { GameclientService } from "src/Games/GameClient/Gameclient.service";
@@ -8,7 +8,9 @@ import * as ws from "ws";
 import * as http from "http";
 
 @Injectable()
-export class NetworkingProvider {
+export class NetworkingService {
+    private readonly logger = new Logger(NetworkingService.name);
+
     constructor(
         private readonly configurationService: ConfigurationService,
         private readonly messagesService: MessagesService,
@@ -18,6 +20,8 @@ export class NetworkingProvider {
             host: this.configurationService.getString("game.tcp.ip"),
             port: this.configurationService.getInt("game.tcp.port")
         });
+
+        this.logger.log("Started GameServer on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port") + "");
 
         var self = this;
 
@@ -31,6 +35,9 @@ export class NetworkingProvider {
                 inPacket.header = packetId;
                 var gameClient: GameclientDefs = self.gameclientService.users.get(req.headers['sec-websocket-key']);
                 self.messagesService.handlePacket(gameClient, inPacket);
+            }
+            ws.onclose = function() {
+                
             }
         });
     }
