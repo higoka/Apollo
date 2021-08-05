@@ -13,15 +13,13 @@ export class RequestCatalogModeEvent extends MessageHandler {
     }
 
     public handle(): void {
-        if (this.gameClient.habbo != null) {
-            var mode: string = this.entryPacket.readString();
-            if (mode == "normal") {
-                this.gameClient.send(new CatalogModeComposer(0).compose());
-                this.gameClient.send(new CatalogPagesListComposer(this.gameClient.habbo, mode, this.catalogueService).compose());
-            } else {
-                this.gameClient.send(new CatalogModeComposer(1).compose());
-                this.gameClient.send(new CatalogPagesListComposer(this.gameClient.habbo, mode, this.catalogueService).compose());
-            }
+        var mode: string = this.entryPacket.readString();
+        if (mode == "normal") {
+            this.gameClient.send(new CatalogModeComposer(0).compose());
+            this.gameClient.send(new CatalogPagesListComposer(this.gameClient.habbo, mode, this.catalogueService).compose());
+        } else {
+            this.gameClient.send(new CatalogModeComposer(1).compose());
+            this.gameClient.send(new CatalogPagesListComposer(this.gameClient.habbo, mode, this.catalogueService).compose());
         }
     }
 }

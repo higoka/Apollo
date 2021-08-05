@@ -11,6 +11,7 @@ import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
 import { InPacket } from './Incoming/In.packet';
 import { IncomingList } from './Incoming/Incoming.list';
 import { MessageHandler } from './Incoming/Message.handler';
+import { RequestNewNavigatorDataEvent } from './Incoming/Navigator/RequestNewNavigatorDataEvent';
 import { RequestUserCurrencyEvent } from './Incoming/User/RequestUserCurrencyEvent';
 import { RequestUserDataEvent } from './Incoming/User/RequestUserDataEvent';
 
@@ -31,6 +32,7 @@ export class MessagesService {
         this.registerHandshake();
         this.registerUser();
         this.registerCatalog();
+        this.registerNavigator();
         this.registerNames();
     }
 
@@ -80,6 +82,10 @@ export class MessagesService {
         this.incomingPackets.set(IncomingList.CATALOG_PAGE, new RequestCatalogPageEvent(this.gameService.catalogueServices));
     }
 
+    private registerNavigator(): void {
+        this.incomingPackets.set(IncomingList.NAVIGATOR_INIT, new RequestNewNavigatorDataEvent());
+    }
+
     private registerNames(): void {
         this.packetNames.set(IncomingList.RELEASE_VERSION, "ReleaseVersionEvent");
         this.packetNames.set(IncomingList.SECURITY_TICKET, "SecureLoginEvent");
@@ -88,5 +94,6 @@ export class MessagesService {
         this.packetNames.set(IncomingList.USER_CURRENCY, "RequestUserCurrencyEvent");
         this.packetNames.set(IncomingList.CATALOG_MODE, "RequestCatalogModeEvent");
         this.packetNames.set(IncomingList.CATALOG_PAGE, "RequestCatalogPageEvent");
+        this.packetNames.set(IncomingList.NAVIGATOR_INIT, "RequestNewNavigatorDataEvent");
     }
 }

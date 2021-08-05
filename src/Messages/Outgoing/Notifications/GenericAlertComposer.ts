@@ -1,4 +1,3 @@
-import { HabboDefs } from "src/Games/User/Habbo.defs";
 import { MessageComposer } from "../Message.composer";
 import { OutPacket } from "../Out.packet";
 import { OutgoingList } from "../Outgoing.list";
