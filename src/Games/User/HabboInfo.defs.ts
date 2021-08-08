@@ -1,6 +1,7 @@
 import { UserEntity } from "src/Core/Database/User/User.entity";
 import { UserService } from "src/Core/Database/User/User.service";
 import { UserCurrencyEntity } from "src/Core/Database/User/UserCurrency.entity";
+import { RoomDefs } from "../Rooms/Room.defs";
 
 export class HabboInfoDefs {
     public id: number;
@@ -19,7 +20,7 @@ export class HabboInfoDefs {
     public homeRoom: number;
     public online: boolean;
     public loadingRoom: number;
-    public currentRoom; // TODO: Add type "Room"
+    public currentRoom: RoomDefs;
     public currencies: Map<number, number>;
 
     constructor(data: UserEntity) {

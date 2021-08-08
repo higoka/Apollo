@@ -5,4 +5,12 @@ export class ArrayUtils {
         }
         return array;
     }
+
+    public static isEmpty(array: Array<any>): boolean {
+        if (array.length === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,20 +1,33 @@
 import * as PF from "pathfinding";
+import { ArrayUtils } from "src/Utils/ArrayUtils";
+import { PathfinderTypeEnum } from "./PathfinderType.enum";
 
 export class PathfinderDefs {
-    private aStar: PF.AStarFinder;
+    private grid: PF.Grid;
+    public roomMap: Array<Array<number>>;
+    public type: PathfinderTypeEnum;
+    public isTeleporting: boolean = false;
+    public isKicked: boolean;
 
     constructor() {
-        var roomMap: Array<Array<number>> = [
-            [0, 0, 0, 1, 0],
-            [1, 0, 0, 0, 1],
-            [0, 0, 1, 0, 0]
-        ];
+        this.roomMap = new Array<Array<number>>();
 
-        var grid: PF.Grid = new PF.Grid(roomMap);
-        grid.setWalkableAt(0, -1, true);
+        if (ArrayUtils.isEmpty(this.roomMap)) {
+            return;
+        }
 
-        this.aStar = new PF.AStarFinder({
+        this.grid = new PF.Grid(this.roomMap);
+        this.grid.setWalkableAt(0, -1, true);
+    }
+
+    public calculate(startX: number, startY: number, endX: number, endY: number): void {
+        
+
+        var aStar: PF.AStarFinder = new PF.AStarFinder({
             diagonalMovement: 4
         });
+
+        var find: number[][] = aStar.findPath(startX, startY, endX, endY, this.grid);
+        console.log(find);
     }
 }
