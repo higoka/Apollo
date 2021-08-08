@@ -37,33 +37,27 @@ export class MessagesService {
         this.registerNames();
     }
 
-    private checkRegister(packetId: number): boolean {
-        return this.incomingPackets.has(packetId);
-    }
-
     public handlePacket(client: GameclientDefs, packet: InPacket): void {
         if (client == null) {
             return;
         }
 
-        if (this.checkRegister(packet.header)) {
-            var handler: MessageHandler = this.incomingPackets.get(packet.header);
-            if (handler == null) {
-                if (this.configurationService.getBoolean("game.tcp.packets_log")) {
-                    this.logger.debug("Unrecognized packet: " + packet.header); 
-                }
-                return;
-            }
-
-            handler.entryPacket = packet;
-            handler.gameClient = client;
-
+        var handler: MessageHandler = this.incomingPackets.get(packet.header);
+        if (handler == null) {
             if (this.configurationService.getBoolean("game.tcp.packets_log")) {
-                this.logger.debug("Packet " + this.packetNames.get(packet.header) + " readed and executed");
+                this.logger.debug("Unrecognized packet received: " + packet.header); 
             }
-
-            handler.handle();
+            return;
         }
+
+        handler.entryPacket = packet;
+        handler.gameClient = client;
+
+        if (this.configurationService.getBoolean("game.tcp.packets_log")) {
+            this.logger.debug("Packet " + this.packetNames.get(packet.header) + " readed and executed");
+        }
+
+        handler.handle();
     }
 
     private registerHandshake(): void {
