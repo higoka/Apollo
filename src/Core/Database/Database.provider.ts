@@ -6,6 +6,12 @@ import { CatalogPagesEntity } from './Catalog/CatalogPages.entity';
 import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
 import { ItemsBaseEntity } from './Items/ItemsBase.entity';
+import { NavigatorFilterEntity } from './Navigator/NavigatorFilter.entity';
+import { NavigatorFlatCatsEntity } from './Navigator/NavigatorFlatCats.entity';
+import { NavigatorPublicCatsEntity } from './Navigator/NavigatorPublicCats.entity';
+import { NavigatorPublicsEntity } from './Navigator/NavigatorPublics.entity';
+import { RoomsEntity } from './Rooms/Rooms.entity';
+import { RoomsModelsEntity } from './Rooms/RoomsModels.entity';
 import { UserEntity } from './User/User.entity';
 import { UserCurrencyEntity } from './User/UserCurrency.entity';
 import { UserPermissionEntity } from './User/UserPermission.entity';
@@ -35,9 +41,15 @@ export class DatabaseProvider {
                 EmulatorTextsEntity,
                 CatalogPagesEntity,
                 CatalogItemsEntity,
-                ItemsBaseEntity
+                ItemsBaseEntity,
+                NavigatorFilterEntity,
+                NavigatorFlatCatsEntity,
+                NavigatorPublicCatsEntity,
+                NavigatorPublicsEntity,
+                RoomsEntity,
+                RoomsModelsEntity
             ],
-            synchronize: false,
+            synchronize: false
         });
     }
 

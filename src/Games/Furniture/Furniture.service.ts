@@ -15,10 +15,10 @@ export class FurnitureService {
         this.loadItems();
     }
 
-    public loadItems(): void {
+    public async loadItems(): Promise<void> {
         this.items.clear();
 
-        this.itemsService.getItemsBase().then((items: ItemsBaseEntity[]) => {
+        return this.itemsService.getItemsBase().then((items: ItemsBaseEntity[]) => {
             items.forEach((item: ItemsBaseEntity) => {
                 var id: number = item.id;
 

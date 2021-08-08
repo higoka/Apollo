@@ -26,7 +26,7 @@ export class CatalogueService {
         this.catalogPages.clear();
 
         this.catalogPages.set(-1, new CatalogueRootLayoutDefs());
-        this.catalogService.getCatalogPages().then((pages: CatalogPagesEntity[]) => {
+        return this.catalogService.getCatalogPages().then((pages: CatalogPagesEntity[]) => {
             pages.forEach((page: CatalogPagesEntity) => {
                 this.catalogPages.set(page.id, new CataloguePageDefs().initData(page)); 
             });
@@ -46,7 +46,7 @@ export class CatalogueService {
     public async loadCatalogItems(): Promise<void> {
         var catalogItemAmount: number = 0;
 
-        this.catalogService.getCatalogItems().then((items: CatalogItemsEntity[]) => {
+        return this.catalogService.getCatalogItems().then((items: CatalogItemsEntity[]) => {
             items.forEach((item: CatalogItemsEntity) => {
                 var page: CataloguePageDefs = this.catalogPages.get(item.page_id);
 

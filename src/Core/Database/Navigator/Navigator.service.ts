@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Connection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { NavigatorProvider } from './Navigator.provider';
 import { NavigatorFilterEntity } from './NavigatorFilter.entity';
 import { NavigatorPublicCatsEntity } from './NavigatorPublicCats.entity';

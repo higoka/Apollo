@@ -4,6 +4,7 @@ import { FurnitureModule } from './Furniture/Furniture.module';
 import { GameService } from './Game.service';
 import { GameclientModule } from './GameClient/Gameclient.module';
 import { NavigationModule } from './Navigation/Navigation.module';
+import { RoomModule } from './Rooms/Room.module';
 import { HabboModule } from './User/Habbo.module';
 
 @Module({
@@ -12,7 +13,8 @@ import { HabboModule } from './User/Habbo.module';
         HabboModule,
         CatalogueModule,
         NavigationModule,
-        FurnitureModule
+        FurnitureModule,
+        RoomModule
     ],
     providers: [
         GameService

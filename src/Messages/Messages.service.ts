@@ -12,6 +12,7 @@ import { InPacket } from './Incoming/In.packet';
 import { IncomingList } from './Incoming/Incoming.list';
 import { MessageHandler } from './Incoming/Message.handler';
 import { RequestNewNavigatorDataEvent } from './Incoming/Navigator/RequestNewNavigatorDataEvent';
+import { RequestNewNavigatorRoomsEvent } from './Incoming/Navigator/RequestNewNavigatorRoomsEvent';
 import { RequestUserCurrencyEvent } from './Incoming/User/RequestUserCurrencyEvent';
 import { RequestUserDataEvent } from './Incoming/User/RequestUserDataEvent';
 
@@ -68,7 +69,7 @@ export class MessagesService {
 
     private registerHandshake(): void {
         this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
-        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.gameService.habboServices, this.emulatorService));
+        this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.gameService.HabboService, this.emulatorService));
         this.incomingPackets.set(IncomingList.CLIENT_LATENCY, new PingEvent());
     }
 
@@ -78,12 +79,13 @@ export class MessagesService {
     }
 
     private registerCatalog(): void {
-        this.incomingPackets.set(IncomingList.CATALOG_MODE, new RequestCatalogModeEvent(this.gameService.catalogueServices));
-        this.incomingPackets.set(IncomingList.CATALOG_PAGE, new RequestCatalogPageEvent(this.gameService.catalogueServices));
+        this.incomingPackets.set(IncomingList.CATALOG_MODE, new RequestCatalogModeEvent(this.gameService.CatalogueService));
+        this.incomingPackets.set(IncomingList.CATALOG_PAGE, new RequestCatalogPageEvent(this.gameService.CatalogueService));
     }
 
     private registerNavigator(): void {
         this.incomingPackets.set(IncomingList.NAVIGATOR_INIT, new RequestNewNavigatorDataEvent());
+        this.incomingPackets.set(IncomingList.NAVIGATOR_SEARCH, new RequestNewNavigatorRoomsEvent(this.gameService.NavigatorService));
     }
 
     private registerNames(): void {
@@ -95,5 +97,6 @@ export class MessagesService {
         this.packetNames.set(IncomingList.CATALOG_MODE, "RequestCatalogModeEvent");
         this.packetNames.set(IncomingList.CATALOG_PAGE, "RequestCatalogPageEvent");
         this.packetNames.set(IncomingList.NAVIGATOR_INIT, "RequestNewNavigatorDataEvent");
+        this.packetNames.set(IncomingList.NAVIGATOR_SEARCH, "RequestNewNavigatorRoomsEvent");
     }
 }
