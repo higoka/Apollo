@@ -15,7 +15,7 @@ export class UserPermissionComposer extends MessageComposer {
     protected composeInternal(): OutPacket {
         this.response.init(OutgoingList.USER_PERMISSIONS);
         this.response.writeInt(2);
-        this.response.writeInt(this.habbo.habboInfo.rankId);
+        this.response.writeInt(this.habbo.habboInfo.rank.level);
         this.response.writeBoolean(true);
         return this.response;
     }

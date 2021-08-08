@@ -35,7 +35,7 @@ export class SecureLoginEvent extends MessageHandler {
                         return;
                     }
 
-                    this.habboService.addHabbo(habbo);
+                    this.habboService.online.set(habbo.habboInfo.id, habbo);
                     this.gameClient.send(new LoginOKComposer().compose());
                     this.gameClient.send(new UserPermissionComposer(this.gameClient.habbo).compose());
                     this.gameClient.send(new AvailabilityStatusMessageComposer(true, false, true).compose());

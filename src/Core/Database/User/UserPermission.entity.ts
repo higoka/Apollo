@@ -525,6 +525,9 @@ export class UserPermissionEntity {
     auto_gotw_amount: number;
 
     @Column()
+    auto_points_amount: number;
+
+    @Column()
     acc_mention: number;
 
     @Column()

@@ -70,7 +70,7 @@ export class CatalogueService {
 
         this.catalogPages.get(parentId).childPages.forEach((value: CataloguePageDefs) => {
             var isVisible: boolean = value.visible;
-            var visibleRank: boolean = value.rank <= habbo.habboInfo.rankId;
+            var visibleRank: boolean = value.rank <= habbo.habboInfo.rank.level;
             var clubOnly: boolean = true;
 
             if (value.clubOnly) {

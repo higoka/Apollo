@@ -20,7 +20,7 @@ export class RequestCatalogPageEvent extends MessageHandler {
         var page: CataloguePageDefs = this.catalogueService.catalogPages.get(catalogPageId);
 
         if (catalogPageId > 0 && page != null) {
-            if (page.rank <= this.gameClient.habbo.habboInfo.rankId && page.enabled) {
+            if (page.rank <= this.gameClient.habbo.habboInfo.rank.level && page.enabled) {
                 this.gameClient.send(new CatalogPageComposer(page, this.gameClient.habbo, mode).compose());
             }
         }

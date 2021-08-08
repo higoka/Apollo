@@ -1,6 +1,8 @@
 import { UserEntity } from "src/Core/Database/User/User.entity";
 import { UserService } from "src/Core/Database/User/User.service";
 import { UserCurrencyEntity } from "src/Core/Database/User/UserCurrency.entity";
+import { PermissionService } from "../Permission/Permission.service";
+import { RankDefs } from "../Permission/Rank.defs";
 import { RoomDefs } from "../Rooms/Room.defs";
 
 export class HabboInfoDefs {
@@ -13,8 +15,7 @@ export class HabboInfoDefs {
     public ipRegister: string;
     public ipCurrent: string;
     public accountCreated: string;
-    public rankId: number;
-    public rank: number; // TODO: Add type "Rank"
+    public rank: RankDefs;
     public credits: number;
     public lastOnline: string;
     public homeRoom: number;
@@ -23,7 +24,7 @@ export class HabboInfoDefs {
     public currentRoom: RoomDefs;
     public currencies: Map<number, number>;
 
-    constructor(data: UserEntity) {
+    constructor(data: UserEntity, permissionService: PermissionService) {
         this.id = data.id;
         this.username = data.username;
         this.motto = data.motto;
@@ -33,11 +34,11 @@ export class HabboInfoDefs {
         this.ipRegister = data.ip_register;
         this.ipCurrent = data.ip_current;
         this.accountCreated = data.account_created;
-        this.rankId = data.rank;
         this.credits = data.credits;
         this.lastOnline = data.last_online;
         this.homeRoom = data.home_room;
         this.online = !!data.online;
+        this.rank = permissionService.rank.get(data.rank);
     }
 
     public async loadCurrencies(userService: UserService): Promise<void> {
