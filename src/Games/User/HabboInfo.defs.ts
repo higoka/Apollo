@@ -37,8 +37,14 @@ export class HabboInfoDefs {
         this.credits = data.credits;
         this.lastOnline = data.last_online;
         this.homeRoom = data.home_room;
-        this.online = !!data.online;
+        this.online = false;
         this.rank = permissionService.rank.get(data.rank);
+
+        if (this.rank == null) {
+            this.rank = permissionService.rank.get(1);
+        }
+
+        this.currentRoom = null;
     }
 
     public async loadCurrencies(userService: UserService): Promise<void> {

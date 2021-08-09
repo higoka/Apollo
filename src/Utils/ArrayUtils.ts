@@ -13,4 +13,8 @@ export class ArrayUtils {
             return false;
         }
     }
+
+    public static removeFromArray(array: Array<any>, element: string | number): Array<any> {
+        return array[element] = null;
+    }
 }

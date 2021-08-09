@@ -48,7 +48,7 @@ export class RoomService {
             room = this.activeRooms.get(roomId);
 
             if (load) {
-                // TODO: Load room data
+                room.loadData();
             }
             return room;
         }
@@ -56,7 +56,7 @@ export class RoomService {
         this.roomsService.getRoomByRoomId(roomId).then((roomData: RoomsEntity) => {
             room = new RoomDefs(roomData, this.roomModels.get(roomData.model));
             if (load) {
-                // TODO: Load room data
+                room.loadData();
             }
             if (room != null) {
                 this.activeRooms.set(room.id, room);
