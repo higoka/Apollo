@@ -42,7 +42,7 @@ export class NavigationService {
                     var roomClass: RoomDefs = this.roomService.loadRoom(room.room_id, false);
 
                     if (roomClass != null) {
-                        category.addRoom(roomClass);
+                        category.rooms.push(roomClass);
                     }
                 }
             });
