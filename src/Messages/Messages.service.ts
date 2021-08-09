@@ -54,7 +54,11 @@ export class MessagesService {
         handler.gameClient = client;
 
         if (this.configurationService.getBoolean("game.tcp.packets_log")) {
-            this.logger.debug("Packet " + this.packetNames.get(packet.header) + " readed and executed");
+            if (this.packetNames.has(packet.header)) {
+                this.logger.debug("Packet " + this.packetNames.get(packet.header) + " readed and executed");
+            } else {
+                this.logger.debug("Packet UnNamedEvent readed and executed");
+            }
         }
 
         handler.handle();
