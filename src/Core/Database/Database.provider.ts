@@ -6,6 +6,8 @@ import { CatalogPagesEntity } from './Catalog/CatalogPages.entity';
 import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
 import { ItemsBaseEntity } from './Items/ItemsBase.entity';
+import { ModerationCategoryEntity } from './ModTools/ModerationCategory.entity';
+import { ModerationPresetEntity } from './ModTools/ModerationPreset.entity';
 import { NavigatorFilterEntity } from './Navigator/NavigatorFilter.entity';
 import { NavigatorFlatCatsEntity } from './Navigator/NavigatorFlatCats.entity';
 import { NavigatorPublicCatsEntity } from './Navigator/NavigatorPublicCats.entity';
@@ -47,7 +49,9 @@ export class DatabaseProvider {
                 NavigatorPublicCatsEntity,
                 NavigatorPublicsEntity,
                 RoomsEntity,
-                RoomsModelsEntity
+                RoomsModelsEntity,
+                ModerationCategoryEntity,
+                ModerationPresetEntity
             ],
             synchronize: false
         });
