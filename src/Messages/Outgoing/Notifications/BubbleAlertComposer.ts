@@ -17,7 +17,6 @@ export class BubbleAlertComposer extends MessageComposer {
         this.response.init(OutgoingList.NOTIFICATION_LIST);
 
         this.response.writeString(this.errorKey);
-        console.log(this.keys);
         this.response.writeInt(this.keys.size);
         this.keys.forEach((key: string) => {
             this.response.writeString(this.keys.keys().next().value);
