@@ -23,6 +23,7 @@ export class HabboInfoDefs {
     public loadingRoom: number;
     public currentRoom: RoomDefs;
     public currencies: Map<number, number>;
+    public firstVisit: boolean;
 
     constructor(data: UserEntity, permissionService: PermissionService) {
         this.id = data.id;

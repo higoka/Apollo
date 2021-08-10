@@ -17,6 +17,7 @@ import { RoomsModelsEntity } from './Rooms/RoomsModels.entity';
 import { UserEntity } from './User/User.entity';
 import { UserCurrencyEntity } from './User/UserCurrency.entity';
 import { UserPermissionEntity } from './User/UserPermission.entity';
+import { UserSettingsEntity } from './User/UserSettings.entity';
 
 @Injectable()
 export class DatabaseProvider {
@@ -39,6 +40,7 @@ export class DatabaseProvider {
                 UserEntity,
                 UserCurrencyEntity,
                 UserPermissionEntity,
+                UserSettingsEntity,
                 EmulatorSettingsEntity,
                 EmulatorTextsEntity,
                 CatalogPagesEntity,

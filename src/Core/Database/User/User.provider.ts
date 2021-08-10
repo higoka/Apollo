@@ -4,6 +4,7 @@ import { Connection, Repository } from 'typeorm';
 import { UserEntity } from "./User.entity";
 import { UserCurrencyEntity } from './UserCurrency.entity';
 import { UserPermissionEntity } from './UserPermission.entity';
+import { UserSettingsEntity } from './UserSettings.entity';
 
 @Injectable()
 export class UserProvider {
@@ -28,6 +29,12 @@ export class UserProvider {
     get userPermissionRepository(): Promise<Repository<UserPermissionEntity>> {
         return this.databaseProvider.getConnection().then((conn: Connection) => {
             return conn.getRepository(UserPermissionEntity);
+        });
+    }
+
+    get userSettingsRepository(): Promise<Repository<UserSettingsEntity>> {
+        return this.databaseProvider.getConnection().then((conn: Connection) => {
+            return conn.getRepository(UserSettingsEntity);
         });
     }
 }

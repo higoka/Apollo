@@ -21,7 +21,7 @@ export class HabboService {
     public async loadHabbo(sso: string): Promise<HabboDefs> {
         var habbo: HabboDefs;
         return this.userService.findBySSO(sso).then((user: UserEntity) => {           
-            habbo = new HabboDefs(user, this.permissionService);
+            habbo = new HabboDefs(user, this.permissionService, this.userService);
             habbo.habboInfo.loadCurrencies(this.userService);
 
             // TODO: Check ban when user login
