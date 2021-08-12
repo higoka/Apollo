@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from 'src/Core/Database/User/User.module';
+import { FriendshipModule } from '../Friendship/Friendship.module';
 import { GameclientModule } from '../GameClient/Gameclient.module';
 import { PermissionModule } from '../Permission/Permission.module';
 import { HabboService } from './Habbo.service';
@@ -8,7 +9,8 @@ import { HabboService } from './Habbo.service';
     imports: [
         GameclientModule,
         UserModule,
-        PermissionModule
+        PermissionModule,
+        FriendshipModule
     ],
     providers: [
         HabboService

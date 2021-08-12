@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CatalogueModule } from './Catalogue/Catalogue.module';
+import { FriendshipModule } from './Friendship/Friendship.module';
 import { FurnitureModule } from './Furniture/Furniture.module';
 import { GameService } from './Game.service';
 import { GameclientModule } from './GameClient/Gameclient.module';
@@ -18,7 +19,8 @@ import { HabboModule } from './User/Habbo.module';
         FurnitureModule,
         RoomModule,
         PermissionModule,
-        ModerationModule
+        ModerationModule,
+        FriendshipModule
     ],
     providers: [
         GameService

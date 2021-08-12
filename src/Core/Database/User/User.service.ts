@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InsertResult, Repository } from 'typeorm';
+import { InsertResult, Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from './User.entity';
 import { UserProvider } from './User.provider';
 import { UserCurrencyEntity } from './UserCurrency.entity';
@@ -42,7 +42,7 @@ export class UserService {
         var repository: Repository<UserSettingsEntity> = await this.userProvider.userSettingsRepository;
         return repository.insert({
             user_id: userId
-        })
+        });
     }
 
     async HabboStatsCounter(userId: number): Promise<number> {

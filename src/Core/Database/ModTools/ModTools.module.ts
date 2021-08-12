@@ -12,7 +12,6 @@ import { ModToolsService } from './ModTools.service';
         ModToolsService
     ],
     exports: [
-        ModToolsProvider,
         ModToolsService
     ]
 })

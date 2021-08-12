@@ -12,8 +12,7 @@ import { RoomsService } from './Rooms.service';
         RoomsProvider
     ],
     exports: [
-        RoomsService,
-        RoomsProvider
+        RoomsService
     ]
 })
 export class RoomsModule {}

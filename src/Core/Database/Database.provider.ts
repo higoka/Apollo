@@ -5,6 +5,7 @@ import { CatalogItemsEntity } from './Catalog/CatalogItems.entity';
 import { CatalogPagesEntity } from './Catalog/CatalogPages.entity';
 import { EmulatorSettingsEntity } from './Emulator/EmulatorSettings.entity';
 import { EmulatorTextsEntity } from './Emulator/EmulatorTexts.entity';
+import { MessengerFriendsEntity } from './Friends/MessengerFriends.entity';
 import { ItemsBaseEntity } from './Items/ItemsBase.entity';
 import { ModerationCategoryEntity } from './ModTools/ModerationCategory.entity';
 import { ModerationPresetEntity } from './ModTools/ModerationPreset.entity';
@@ -53,7 +54,8 @@ export class DatabaseProvider {
                 RoomsEntity,
                 RoomsModelsEntity,
                 ModerationCategoryEntity,
-                ModerationPresetEntity
+                ModerationPresetEntity,
+                MessengerFriendsEntity
             ],
             synchronize: false
         });
