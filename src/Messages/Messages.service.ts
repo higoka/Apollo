@@ -5,6 +5,7 @@ import { GameService } from 'src/Games/Game.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
 import { RequestCatalogModeEvent } from './Incoming/Catalog/RequestCatalogModeEvent';
 import { RequestCatalogPageEvent } from './Incoming/Catalog/RequestCatalogPageEvent';
+import { RequestInitFriendsEvent } from './Incoming/Friendship/RequestInitFriendsEvent';
 import { PingEvent } from './Incoming/Handshake/PingEvent';
 import { ReleaseVersionEvent } from './Incoming/Handshake/ReleaseVersionEvent';
 import { SecureLoginEvent } from './Incoming/Handshake/SecureLoginEvent';
@@ -34,6 +35,7 @@ export class MessagesService {
         this.registerUser();
         this.registerCatalog();
         this.registerNavigator();
+        this.registerFriends();
         this.registerNames();
     }
 
@@ -85,6 +87,10 @@ export class MessagesService {
         this.incomingPackets.set(IncomingList.NAVIGATOR_SEARCH, new RequestNewNavigatorRoomsEvent(this.gameService.NavigatorService));
     }
 
+    private registerFriends(): void {
+        this.incomingPackets.set(IncomingList.MESSENGER_INIT, new RequestInitFriendsEvent());
+    }
+
     private registerNames(): void {
         this.packetNames.set(IncomingList.RELEASE_VERSION, "ReleaseVersionEvent");
         this.packetNames.set(IncomingList.SECURITY_TICKET, "SecureLoginEvent");
@@ -95,5 +101,6 @@ export class MessagesService {
         this.packetNames.set(IncomingList.CATALOG_PAGE, "RequestCatalogPageEvent");
         this.packetNames.set(IncomingList.NAVIGATOR_INIT, "RequestNewNavigatorDataEvent");
         this.packetNames.set(IncomingList.NAVIGATOR_SEARCH, "RequestNewNavigatorRoomsEvent");
+        this.packetNames.set(IncomingList.MESSENGER_INIT, "RequestInitFriendsEvent");
     }
 }

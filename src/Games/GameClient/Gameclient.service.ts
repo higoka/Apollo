@@ -29,6 +29,20 @@ export class GameclientService {
         return null;
     }
 
+    public getHabboByUsername(username: string): HabboDefs {
+        this.users.forEach((client: GameclientDefs) => {
+            if (client.habbo != null) {
+                return;
+            }
+
+            if (client.habbo.habboInfo.username == username) {
+                return client.habbo;
+            }
+        });
+
+        return null;
+    }
+
     public get userCounter(): number {
         return this.users.size;
     }

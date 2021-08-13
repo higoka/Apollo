@@ -1,11 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { FriendsService } from "src/Core/Database/Friends/Friends.service";
 import { MessengerFriendsEntity } from "src/Core/Database/Friends/MessengerFriends.entity";
 import { MessengerBuddyDefs } from "./MessengerBuddy.defs";
 
 @Injectable()
 export class FriendshipService {
-    private readonly logger = new Logger(FriendshipService.name);
     public friends: Map<number, MessengerBuddyDefs>;
 
     constructor(
@@ -19,7 +18,7 @@ export class FriendshipService {
             buddies.forEach((buddy: MessengerFriendsEntity) => {
                 var friend: MessengerBuddyDefs = new MessengerBuddyDefs(buddy)
 
-                if (friend.id != userId) {
+                if (friend.userOne != userId) {
                     return;
                 }
 

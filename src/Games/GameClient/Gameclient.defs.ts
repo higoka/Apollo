@@ -10,8 +10,15 @@ export class GameclientDefs {
         this.channel = channel;
     }
 
-    public send(message: OutPacket): void {
-        var out: OutPacket = message.encode();
+    public send(message: OutPacket | Array<OutPacket>): void {
+        var out: OutPacket;
+        if (Array.isArray(message)) {
+            message.forEach((packet: OutPacket) => {
+                out = packet.encode();
+            });
+        } else {
+            out = message.encode();
+        }
         this.write(out.getBuffer);
     }
 
