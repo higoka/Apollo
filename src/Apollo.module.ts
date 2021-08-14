@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { CoreModule } from './Core/Core.module';
 import { GameModule } from './Games/Game.module';
-import { NetworkingModule } from './Networking/Networking.module';
+import { FlashNetworkingModule } from './Networking/Flash/FlashNetworking.module';
+import { NitroNetworkingModule } from './Networking/Nitro/NitroNetworking.module';
 
 @Module({
     imports: [
-        NetworkingModule,
+        NitroNetworkingModule,
+        FlashNetworkingModule,
         CoreModule,
         GameModule
     ]

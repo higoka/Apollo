@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { FriendsService } from "src/Core/Database/Friends/Friends.service";
 import { MessengerFriendsEntity } from "src/Core/Database/Friends/MessengerFriends.entity";
+import { HabboDefs } from "../User/Habbo.defs";
 import { MessengerBuddyDefs } from "./MessengerBuddy.defs";
 
 @Injectable()
@@ -13,16 +14,14 @@ export class FriendshipService {
         this.friends = new Map<number, MessengerBuddyDefs>();
     }
 
-    public async loadFriends(userId: number): Promise<void> {
-        return this.friendsService.getMessengerById(userId).then((buddies: MessengerFriendsEntity[]) => {
+    public async loadFriends(habbo: HabboDefs): Promise<void> {
+        return this.friendsService.getMessengerById(habbo.habboInfo.id).then((buddies: MessengerFriendsEntity[]) => {
             buddies.forEach((buddy: MessengerFriendsEntity) => {
-                var friend: MessengerBuddyDefs = new MessengerBuddyDefs(buddy)
-
-                if (friend.userOne != userId) {
+                if (buddy.habbo.id == habbo.habboInfo.id) {
                     return;
                 }
 
-                this.friends.set(buddy.id, friend);
+                this.friends.set(buddy.id, new MessengerBuddyDefs(buddy));
             })
         });
     }

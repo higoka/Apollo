@@ -8,8 +8,8 @@ import * as ws from "ws";
 import * as http from "http";
 
 @Injectable()
-export class NetworkingService {
-    private readonly logger = new Logger(NetworkingService.name);
+export class NitroNetworkingService {
+    private readonly logger = new Logger(NitroNetworkingService.name);
 
     constructor(
         private readonly configurationService: ConfigurationService,
@@ -18,15 +18,13 @@ export class NetworkingService {
     ) {
         var server: ws.Server = new ws.Server({
             host: this.configurationService.getString("game.tcp.ip"),
-            port: this.configurationService.getInt("game.tcp.port")
+            port: this.configurationService.getInt("game.tcp.port_nitro")
         });
-
-        this.logger.log("Started GameServer on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port") + "");
 
         var self = this;
 
         server.on('connection', function connection(ws: ws, req: http.IncomingMessage) {
-            self.gameclientService.addUser(req.headers['sec-websocket-key'], ws);  
+            self.gameclientService.addUser(req.headers['sec-websocket-key'], ws);
             ws.binaryType = 'arraybuffer';
             ws.onmessage = function(incoming: ws.MessageEvent) {
                 var inPacket: InPacket = new InPacket(incoming.data);
@@ -34,11 +32,12 @@ export class NetworkingService {
                 var packetId: number = inPacket.readShort();
                 inPacket.header = packetId;
                 var gameClient: GameclientDefs = self.gameclientService.users.get(req.headers['sec-websocket-key']);
-                self.messagesService.handlePacket(gameClient, inPacket);
+                self.messagesService.handlePacket(gameClient, inPacket, 'NITRO');
             }
             ws.onclose = function() {
                 
             }
         });
+        this.logger.log("Started GameServer for Nitro on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_nitro") + "");
     }
 }

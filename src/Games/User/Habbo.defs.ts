@@ -22,7 +22,7 @@ export class HabboDefs {
         this.pathfinder = new PathfinderDefs();
         this.pathfinder.type = PathfinderTypeEnum.USER;
         this.friends = friendsshipService;
-        friendsshipService.loadFriends(this.habboInfo.id);
+        friendsshipService.loadFriends(this);
 
         // TODO: Add messenger and inventory
     }
