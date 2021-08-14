@@ -31,7 +31,6 @@ export class FlashNetworkingService {
                 var inPacket: InPacket = new InPacket(ab);
                 inPacket.readInt();
                 var packetId: number = inPacket.readShort();
-                console.log(packetId);
                 inPacket.header = packetId;
                 if (packetId == 26979) {
                     var xml: string = "<?xml version=\"1.0\"?>" +
