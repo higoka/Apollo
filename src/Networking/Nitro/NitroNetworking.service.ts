@@ -23,15 +23,17 @@ export class NitroNetworkingService {
 
         var self = this;
 
-        server.on('connection', function connection(ws: ws, req: http.IncomingMessage) {
-            self.gameclientService.addUser(req.headers['sec-websocket-key'], ws);
+        server.on('connection', function connection(ws: ws) {
+            var id: number = Math.floor(Math.random() * 1000);
+            self.gameclientService.addUser(id, ws);
+
             ws.binaryType = 'arraybuffer';
             ws.onmessage = function(incoming: ws.MessageEvent) {
                 var inPacket: InPacket = new InPacket(incoming.data);
                 inPacket.readInt();
                 var packetId: number = inPacket.readShort();
                 inPacket.header = packetId;
-                var gameClient: GameclientDefs = self.gameclientService.users.get(req.headers['sec-websocket-key']);
+                var gameClient: GameclientDefs = self.gameclientService.users.get(id);
                 self.messagesService.handlePacket(gameClient, inPacket, 'NITRO');
             }
             ws.onclose = function() {

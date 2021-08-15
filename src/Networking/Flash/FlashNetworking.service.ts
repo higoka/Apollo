@@ -23,8 +23,8 @@ export class FlashNetworkingService {
         var self = this;
 
         server.on('connection', (socket: net.Socket) => {
-            socket.id = Math.floor(Math.random() * 1000);
-            self.gameclientService.addUser(socket.id, socket);
+            var id: number = Math.floor(Math.random() * 1000);
+            self.gameclientService.addUser(id, socket);
 
             socket.on('data', (data: Buffer) => {
                 var inPacket: InPacket = new InPacket(data.buffer);
@@ -41,7 +41,7 @@ export class FlashNetworkingService {
                     socket.write(Buffer.from(xml, 'utf8'));
                     socket.end();
                 }
-                var gameClient: GameclientDefs = self.gameclientService.users.get(socket.id);
+                var gameClient: GameclientDefs = self.gameclientService.users.get(id);
                 self.messagesService.handlePacket(gameClient, inPacket, 'FLASH');
             });
         });

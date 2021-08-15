@@ -15,7 +15,7 @@ export class MessengerBuddyDefs {
         this.id = data.habbo.id;
         this.username = data.habbo.username;
         this.gender = data.habbo.gender;
-        this.online = data.habbo.online;
+        this.online = parseInt(data.habbo.online);
         this.look = data.habbo.look;
         this.motto = data.habbo.motto;
         this.relation = data.relation;

@@ -27,9 +27,16 @@ export class UserService {
     async findCurrencyByUserId(userId: number): Promise<UserCurrencyEntity[]> {
         var repository: Repository<UserCurrencyEntity> = await this.userProvider.userCurrencyRepository;
         return repository.find({
-            where: { 
+            where: {
                 user_id: userId
             }
+        });
+    }
+
+    async setOnlineState(userId: number): Promise<UpdateResult> {
+        var repository: Repository<UserEntity> = await this.userProvider.userRepository;
+        return repository.update(userId, {
+            online: '1'
         });
     }
 

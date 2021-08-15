@@ -8,14 +8,14 @@ import { HabboService } from "../User/Habbo.service";
 @Injectable()
 export class GameclientService {
     private readonly logger = new Logger(HabboService.name);
-    public users: Map<string | number, GameclientDefs>;
+    public users: Map<number, GameclientDefs>;
 
     constructor() {
-        this.users = new Map<string | number, GameclientDefs>();
+        this.users = new Map<number, GameclientDefs>();
     }
 
-    public addUser(id: string | number, ws: ws | net.Socket): boolean {
-        var gc: GameclientDefs = new GameclientDefs(ws);
+    public addUser(id: number, socket: ws | net.Socket): boolean {
+        var gc: GameclientDefs = new GameclientDefs(socket);
         return this.users.set(id, gc) == null;
     }
 

@@ -31,10 +31,11 @@ export class SecureLoginEvent extends MessageHandler {
         }
 
         if (this.gameClient.habbo == null) {
-            this.habboService.loadHabbo(sso).then((habbo: HabboDefs) => {
+            this.habboService.loadHabbo(sso).then(async (habbo: HabboDefs) => {
                 if (habbo != null) {
                     habbo.client = this.gameClient;
                     this.gameClient.habbo = habbo;
+                    await this.habboService.setOnline(habbo.habboInfo.id);
 
                     if (this.gameClient.habbo.habboInfo == null) {
                         return;

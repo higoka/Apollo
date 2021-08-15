@@ -36,7 +36,7 @@ export class UserEntity {
     home_room: number;
 
     @Column()
-    online: number;
+    online: string;
     
     @Column()
     ip_register: string;
