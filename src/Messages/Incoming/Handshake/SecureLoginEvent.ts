@@ -3,8 +3,13 @@ import { EmulatorSettingsEntity } from 'src/Core/Database/Emulator/EmulatorSetti
 import { HabboDefs } from 'src/Games/User/Habbo.defs';
 import { HabboService } from 'src/Games/User/Habbo.service';
 import { AvailabilityStatusMessageComposer } from 'src/Messages/Outgoing/Handshake/AvailabilityStatusMessageComposer';
+import { EnableNotificationsComposer } from 'src/Messages/Outgoing/Handshake/EnableNotificationsComposer';
 import { LoginOKComposer } from 'src/Messages/Outgoing/Handshake/LoginOKComposer';
 import { PingComposer } from 'src/Messages/Outgoing/Handshake/PingComposer';
+import { UnknownComposer5 } from 'src/Messages/Outgoing/Handshake/UnknownComposer5';
+import { NewNavigatorCollapsedCategoriesComposer } from 'src/Messages/Outgoing/Navigator/NewNavigatorCollapsedCategoriesComposer';
+import { NewNavigatorLiftedRoomsComposer } from 'src/Messages/Outgoing/Navigator/NewNavigatorLiftedRoomsComposer';
+import { NewNavigatorMetaDataComposer } from 'src/Messages/Outgoing/Navigator/NewNavigatorMetaDataComposer';
 import { GenericAlertComposer } from 'src/Messages/Outgoing/Notifications/GenericAlertComposer';
 import { MessagesForYouComposer } from 'src/Messages/Outgoing/Notifications/MessagesForYouComposer';
 import { UserPermissionComposer } from 'src/Messages/Outgoing/User/UserPermissionComposer';
@@ -40,6 +45,10 @@ export class SecureLoginEvent extends MessageHandler {
                     this.gameClient.send(new UserPermissionComposer(this.gameClient.habbo).compose());
                     this.gameClient.send(new AvailabilityStatusMessageComposer(true, false, true).compose());
                     this.gameClient.send(new PingComposer().compose());
+                    this.emulatorService.getSettingsByKey("bubblealerts.enabled").then((result: EmulatorSettingsEntity) => {
+                        this.gameClient.send(new EnableNotificationsComposer(result.value ? true : false).compose());
+                    });
+                    this.gameClient.send(new UnknownComposer5().compose());
 
                     setTimeout(() => {
                         this.emulatorService.getSettingsByKey("hotel.welcome.alert.enabled").then((result: EmulatorSettingsEntity) => {

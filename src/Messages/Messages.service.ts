@@ -74,7 +74,7 @@ export class MessagesService {
     private registerHandshake(): void {
         this.incomingPackets.set(IncomingList.RELEASE_VERSION, new ReleaseVersionEvent());
         this.incomingPackets.set(IncomingList.SECURITY_TICKET, new SecureLoginEvent(this.gameService.HabboService, this.emulatorService));
-        this.incomingPackets.set(IncomingList.CLIENT_LATENCY, new PingEvent());
+        //this.incomingPackets.set(IncomingList.CLIENT_LATENCY, new PingEvent());
         this.incomingPackets.set(IncomingList.SECURITY_MACHINE, new MachineIDEvent());
     }
 
