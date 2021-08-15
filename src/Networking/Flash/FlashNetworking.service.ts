@@ -27,8 +27,7 @@ export class FlashNetworkingService {
             self.gameclientService.addUser(socket.id, socket);
 
             socket.on('data', (data: Buffer) => {
-                var ab: ArrayBuffer = ArrayBufferUtils.toArrayBuffer(data);
-                var inPacket: InPacket = new InPacket(ab);
+                var inPacket: InPacket = new InPacket(data.buffer);
                 inPacket.readInt();
                 var packetId: number = inPacket.readShort();
                 inPacket.header = packetId;
@@ -39,7 +38,6 @@ export class FlashNetworkingService {
                     "  <allow-access-from domain=\"*\" to-ports=\"1-31111\" />" +
                     "  </cross-domain-policy>";
 
-                    socket.setEncoding('binary');
                     socket.write(Buffer.from(xml, 'utf8'));
                     socket.end();
                 }

@@ -28,9 +28,8 @@ export class GameclientDefs {
         }
     }
 
-    private flashWriter(buffer: ArrayBufferLike): void {
+    private flashWriter(buffer: ArrayBuffer): void {
         if (this.channel instanceof net.Socket) {
-            this.channel.setEncoding('binary');
             this.channel.write(ArrayBufferUtils.toBuffer(buffer));
         }
     }

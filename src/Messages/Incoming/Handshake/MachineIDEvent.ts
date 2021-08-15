@@ -12,7 +12,6 @@ export class MachineIDEvent extends MessageHandler {
 
         if (storedMachineId.startsWith("~") || storedMachineId.length != this.HASH_LENGTH) {
             storedMachineId = HexUtils.getRandom(this.HASH_LENGTH);
-            console.log(storedMachineId);
             this.gameClient.send(new MachineIDComposer(storedMachineId).compose());
         }
     }

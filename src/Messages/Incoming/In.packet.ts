@@ -3,7 +3,7 @@ export class InPacket {
     private dataView: DataView;
     private head: number;
 
-    constructor(buffer: ArrayBuffer) {
+    constructor(buffer: ArrayBufferLike) {
         this.position = 0;
         this.dataView = new DataView(buffer);
     }
