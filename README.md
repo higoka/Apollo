@@ -1,5 +1,5 @@
 <img src="https://i.imgur.com/4aP9kFW.jpeg"/>
-Apollo is a server of emulation for nitro client
+Apollo is a server of emulation for habbo retros
 
 ## Server Discord
 Join in the discord of Apollo's project: https://discord.gg/jX7dd6Pgrd
