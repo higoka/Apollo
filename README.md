@@ -10,7 +10,8 @@ Join in the discord of Apollo's project: https://discord.gg/jX7dd6Pgrd
 - NestJS
 
 ## Scope
-This project has the scope to provide an alternative of *Arcturus Morningstar* for the use of *Nitro Client* (made by Billsonnn). Don't support the flash client
+This project has the scope to provide an alternative of *Arcturus Morningstar*.
+Supports Nitro and Flash client.
 
 ## Open Source
 Apollo is sopen source. Everyone can use and/or modify it.
