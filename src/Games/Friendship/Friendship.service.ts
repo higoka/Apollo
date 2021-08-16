@@ -16,13 +16,13 @@ export class FriendshipService {
 
     public async loadFriends(habbo: HabboDefs): Promise<void> {
         return this.friendsService.getMessengerById(habbo.habboInfo.id).then((buddies: MessengerFriendsEntity[]) => {
-            buddies.forEach((buddy: MessengerFriendsEntity) => {
+            for (var buddy of buddies) {
                 if (buddy.habbo.id == habbo.habboInfo.id) {
-                    return;
+                    continue;
                 }
 
                 this.friends.set(buddy.id, new MessengerBuddyDefs(buddy));
-            })
+            }
         });
     }
 }

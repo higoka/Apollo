@@ -33,10 +33,10 @@ export class UserService {
         });
     }
 
-    async setOnlineState(userId: number): Promise<UpdateResult> {
+    async changeState(userId: number, state: string): Promise<UpdateResult> {
         var repository: Repository<UserEntity> = await this.userProvider.userRepository;
         return repository.update(userId, {
-            online: '1'
+            online: state
         });
     }
 

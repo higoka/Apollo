@@ -24,7 +24,7 @@ export class FriendsComposer extends MessageComposer {
         this.response.writeInt(this.pageIndex);
         this.response.writeInt(this.friends.length);
 
-        this.friends.forEach((friend: MessengerBuddyDefs) => {
+        for (var friend of this.friends) {
             this.response.writeInt(friend.id);
             this.response.writeString(friend.username);
             this.response.writeInt(friend.gender.includes("M") ? 0 : 1);
@@ -39,7 +39,7 @@ export class FriendsComposer extends MessageComposer {
             this.response.writeBoolean(false);
             this.response.writeBoolean(false);
             this.response.writeShort(friend.relation);
-        });
+        }
 
         return this.response;
     }
@@ -52,7 +52,7 @@ export class FriendsComposer extends MessageComposer {
         var totalPages: number = (friendsList.size / 750.0);
         var page: number = 0;
 
-        friendsList.forEach((friend: MessengerBuddyDefs) => {
+        for (var friend of friendsList.values()) {
             friends.push(friend);
 
             if (friends.length == 750) {
@@ -60,7 +60,7 @@ export class FriendsComposer extends MessageComposer {
                 ArrayUtils.clearArray(friends);
                 page++;
             }
-        });
+        }
 
         if (page == 0 || friends.length > 0) {
             messages.push(new FriendsComposer(totalPages, page, friends).compose());

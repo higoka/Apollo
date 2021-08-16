@@ -29,13 +29,13 @@ export class NavigationService {
 
     public loadNavigator(): Promise<void> {
         this.navigatorService.getPublicCategories().then((categories: NavigatorPublicCatsEntity[]) => {
-            categories.forEach((category: NavigatorPublicCatsEntity) => {
+            for (var category of categories) {
                 this.publicCategories.set(category.id, new NavigatorPublicCategoryDefs(category));
-            });
+            }
         });
 
         this.navigatorService.getPublicRooms().then((rooms: NavigatorPublicsEntity[]) => {
-            rooms.forEach((room: NavigatorPublicsEntity) => {
+            for (var room of rooms) {
                 var category: NavigatorPublicCategoryDefs = this.publicCategories.get(room.public_cat_id);
 
                 if (category != null) {
@@ -45,7 +45,7 @@ export class NavigationService {
                         category.rooms.push(roomClass);
                     }
                 }
-            });
+            }
         });
         return;
     }

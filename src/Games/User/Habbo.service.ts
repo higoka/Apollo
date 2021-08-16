@@ -35,7 +35,11 @@ export class HabboService {
     }
 
     public async setOnline(userId: number): Promise<UpdateResult> {
-        return await this.userService.setOnlineState(userId);
+        return await this.userService.changeState(userId, '1');
+    }
+
+    public async setOffline(userId: number): Promise<UpdateResult> {
+        return await this.userService.changeState(userId, '0');
     }
 
     public cloneCheck(userId: number): HabboDefs {

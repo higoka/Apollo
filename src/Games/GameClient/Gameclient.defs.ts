@@ -15,9 +15,9 @@ export class GameclientDefs {
     public send(message: OutPacket | Array<OutPacket>): void {
         var out: OutPacket;
         if (Array.isArray(message)) {
-            message.forEach((packet: OutPacket) => {
+            for (var packet of message) {
                 out = packet.encode();
-            });
+            }
         } else {
             out = message.encode();
         }

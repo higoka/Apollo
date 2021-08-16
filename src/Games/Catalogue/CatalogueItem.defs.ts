@@ -59,7 +59,7 @@ export class CatalogueItemDefs {
 
         out.writeInt(items.length);
 
-        items.forEach((item: FurnitureBaseDefs) => {
+        for (var item of items) {
             out.writeString(item.type.toLowerCase());
 
             if (item.type == "B") {
@@ -70,13 +70,13 @@ export class CatalogueItemDefs {
                     out.writeString(this.name.split("_")[2]);
                 } else if (item.name.includes("bot") && item.type == "R") {
                     var lookFound: boolean = false;
-                    this.extradata.split(";").forEach((value: string) => {
+                    for (var value of this.extradata.split(";")) {
                         if (value.startsWith("figure:")) {
                             lookFound = true;
                             out.writeString(value.replace("figure:", ""));
                             return;
                         }
-                    });
+                    }
 
                     if (!lookFound) {
                         out.writeString(this.extradata);
@@ -99,7 +99,7 @@ export class CatalogueItemDefs {
                     }
                 }
             }
-        });
+        }
 
         out.writeInt(this.clubOnly);
         out.writeBoolean(true);
@@ -110,12 +110,12 @@ export class CatalogueItemDefs {
     public getBaseItems(): Array<FurnitureBaseDefs> {
         var items: Array<FurnitureBaseDefs> = new Array<FurnitureBaseDefs>();
 
-        if (!this.itemId != null) {
+        if (this.itemId != null) {
             var itemIds: Array<string> = this.itemId.split(";");
 
             for (var itemId of itemIds) {
-                if (itemId == null) {
-                    return;
+                if (itemId == "") {
+                    continue;
                 }
 
                 if (itemId.includes(":")) {

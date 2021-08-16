@@ -52,9 +52,9 @@ export class HabboInfoDefs {
         this.currencies = new Map<number, number>();
 
         return userService.findCurrencyByUserId(this.id).then((currencies: UserCurrencyEntity[]) => {
-            currencies.forEach((currency: UserCurrencyEntity) => {
+            for (var currency of currencies) {
                 this.currencies.set(currency.type, currency.amount);
-            });
+            }
         });
     }
 

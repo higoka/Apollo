@@ -19,11 +19,11 @@ export class PermissionService {
 
     private async loadPermission(): Promise<void> {
         return this.userService.findPermission().then((permissions: UserPermissionEntity[]) => {
-            permissions.forEach((permission: UserPermissionEntity) => {
+            for (var permission of permissions) {
                 if (!this.rank.has(permission.id)) {
                     this.rank.set(permission.id, new RankDefs(permission));
                 }
-            });
+            }
         });
     }
 }

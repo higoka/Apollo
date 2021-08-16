@@ -16,10 +16,10 @@ export class UserCurrencyComposer extends MessageComposer {
         this.response.init(OutgoingList.USER_CURRENCY);
         var currencyList: number[] = [0, 5, 103]
         this.response.writeInt(currencyList.length);
-        currencyList.forEach((type: number) => {
+        for (var type of currencyList) {
             this.response.writeInt(type);
             this.response.writeInt(this.habbo.habboInfo.getCurrencyAmount(type));
-        });
+        }
         return this.response;
     }
 }

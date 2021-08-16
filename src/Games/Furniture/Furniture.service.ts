@@ -19,13 +19,13 @@ export class FurnitureService {
         this.items.clear();
 
         return this.itemsService.getItemsBase().then((items: ItemsBaseEntity[]) => {
-            items.forEach((item: ItemsBaseEntity) => {
+            for (var item of items) {
                 var id: number = item.id;
 
                 if (!this.items.has(id)) {
                     this.items.set(id, new FurnitureBaseDefs(item));
                 }
-            });
+            }
         });
     }
 }

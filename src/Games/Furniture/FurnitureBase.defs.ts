@@ -52,9 +52,9 @@ export class FurnitureBaseDefs {
 
         /*if (!data.vending_ids == null) {
             var vendingIds: Array<string> = data.vending_ids.toString().replace(";", ",").split(",");
-            vendingIds.forEach((value: string) => {
+            for (var value of vendingIds) {
                 this.vendingItems.push(parseInt(value.replace("", "")));
-            });
+            }
         }
 
         if (data.multiheight.includes(";")) {

@@ -20,29 +20,31 @@ export class GameclientService {
     }
 
     public getHabbo(userId: number): HabboDefs {
-        this.users.forEach((client: GameclientDefs) => {
+        for (var client of this.users.values()) {
             if (client.habbo == null) {
-                return;
+                continue;
             }
 
             if (client.habbo.habboInfo.id == userId) {
                 return client.habbo;
             }
-        });
+        }
 
         return null;
     }
 
     public getHabboByUsername(username: string): HabboDefs {
-        this.users.forEach((client: GameclientDefs) => {
-            if (client.habbo != null) {
-                return;
+        for (var client of this.users.values()) {
+            if (client.habbo == null) {
+                continue;
             }
 
             if (client.habbo.habboInfo.username == username) {
                 return client.habbo;
             }
-        });
+        }
+
+        return null;
 
         return null;
     }

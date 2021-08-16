@@ -31,9 +31,9 @@ export class CatalogPagesListComposer extends MessageComposer {
         this.response.writeInt(0);
         this.response.writeInt(pages.length);
 
-        pages.forEach((pageData: CataloguePageDefs) => {
+        for (var pageData of pages) {
             this.append(pageData);
-        });
+        }
 
         this.response.writeBoolean(false);
         this.response.writeString(this.mode);
@@ -52,8 +52,8 @@ export class CatalogPagesListComposer extends MessageComposer {
 
         this.response.writeInt(pages.length);
 
-        pages.forEach((pageData: CataloguePageDefs) => {
+        for (var pageData of pages) {
             this.append(pageData);
-        });
+        }
     }
 }

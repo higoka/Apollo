@@ -21,15 +21,15 @@ export class ModerationService {
         this.category.clear();
 
         this.modToolsService.getAllCategory().then((categories: ModerationCategoryEntity[]) => {
-            categories.forEach((category: ModerationCategoryEntity) => {
+            for (var category of categories) {
                 this.category.set(category.id, new ModerationCategoryDefs(category));
 
                 this.modToolsService.getPresetByCategory(category.id).then((presets: ModerationPresetEntity[]) => {
-                    presets.forEach((preset: ModerationPresetEntity) => {
+                    for (var preset of presets) {
                         this.category.get(category.id).preset.push(new ModerationPresetDefs(preset));
-                    });
+                    }
                 });
-            });
+            }
         });
     }
 }

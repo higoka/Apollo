@@ -18,11 +18,11 @@ export class BubbleAlertComposer extends MessageComposer {
 
         this.response.writeString(this.errorKey);
         this.response.writeInt(this.keys.size);
-        this.keys.forEach((key: string) => {
+        for (var key of this.keys.values()) {
             this.response.writeString(this.keys.keys().next().value);
             this.response.writeString(key);
-        })
- 
+        }
+    
         return this.response;
     }
 }

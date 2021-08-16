@@ -26,18 +26,18 @@ export class RoomService {
 
         return this.roomsService.getAllRoomsModels().then((models: RoomsModelsEntity[]) => {
             this.logger.log("Loaded " + models.length + " room models");
-            models.forEach((model: RoomsModelsEntity) => {
+            for (var model of models) {
                 this.roomModels.set(model.name, new RoomModelDefs(model));
-            });
+            }
         })
     }
 
     public async loadRoomsByHabbo(habbo: HabboDefs): Promise<void> {
         return this.roomsService.getRoomsByOwnerId(habbo.habboInfo.id).then((rooms: RoomsEntity[]) => {
-            rooms.forEach((room: RoomsEntity) => {
+            for (var room of rooms) {
                 if (!this.activeRooms.has(room.id))
                     this.activeRooms.set(room.id, new RoomDefs(room, this.roomModels.get(room.model)));
-            });
+            }
         });
     }
 
