@@ -3,6 +3,7 @@ import { ConfigurationService } from 'src/Core/Configuration/Configuration.servi
 import { EmulatorService } from 'src/Core/Database/Emulator/Emulator.service';
 import { GameService } from 'src/Games/Game.service';
 import { GameclientDefs } from 'src/Games/GameClient/Gameclient.defs';
+import { GameclientService } from 'src/Games/GameClient/Gameclient.service';
 import { RequestCatalogModeEvent } from './Incoming/Catalog/RequestCatalogModeEvent';
 import { RequestCatalogPageEvent } from './Incoming/Catalog/RequestCatalogPageEvent';
 import { RequestInitFriendsEvent } from './Incoming/Friendship/RequestInitFriendsEvent';
@@ -17,6 +18,7 @@ import { RequestNewNavigatorDataEvent } from './Incoming/Navigator/RequestNewNav
 import { RequestNewNavigatorRoomsEvent } from './Incoming/Navigator/RequestNewNavigatorRoomsEvent';
 import { RequestUserCurrencyEvent } from './Incoming/User/RequestUserCurrencyEvent';
 import { RequestUserDataEvent } from './Incoming/User/RequestUserDataEvent';
+import { RequestUserProfileEvent } from './Incoming/User/RequestUserProfileEvent';
 
 @Injectable()
 export class MessagesService {
@@ -27,7 +29,8 @@ export class MessagesService {
     constructor(
         private readonly configurationService: ConfigurationService,
         private readonly gameService: GameService,
-        private readonly emulatorService: EmulatorService
+        private readonly emulatorService: EmulatorService,
+        private readonly gameclientService: GameclientService
     ) {
         this.incomingPackets = new Map<number, MessageHandler>();
         this.packetNames = new Map<number, string>();
@@ -80,6 +83,7 @@ export class MessagesService {
 
     private registerUser(): void {
         this.incomingPackets.set(IncomingList.USER_INFO, new RequestUserDataEvent());
+        this.incomingPackets.set(IncomingList.USER_PROFILE, new RequestUserProfileEvent(this.gameclientService));
         this.incomingPackets.set(IncomingList.USER_CURRENCY, new RequestUserCurrencyEvent());
     }
 
@@ -101,6 +105,7 @@ export class MessagesService {
         this.packetNames.set(IncomingList.RELEASE_VERSION, "ReleaseVersionEvent");
         this.packetNames.set(IncomingList.SECURITY_TICKET, "SecureLoginEvent");
         this.packetNames.set(IncomingList.CLIENT_LATENCY, "PingEvent");
+        this.packetNames.set(IncomingList.USER_PROFILE, "RequestUserProfileEvent");
         this.packetNames.set(IncomingList.SECURITY_MACHINE, "MachineIDEvent");
         this.packetNames.set(IncomingList.USER_INFO, "RequestUserDataEvent");
         this.packetNames.set(IncomingList.USER_CURRENCY, "RequestUserCurrencyEvent");

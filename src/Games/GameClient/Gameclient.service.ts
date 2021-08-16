@@ -21,7 +21,7 @@ export class GameclientService {
 
     public getHabbo(userId: number): HabboDefs {
         this.users.forEach((client: GameclientDefs) => {
-            if (client.habbo != null) {
+            if (client.habbo == null) {
                 return;
             }
 
