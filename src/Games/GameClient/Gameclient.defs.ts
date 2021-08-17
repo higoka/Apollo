@@ -3,6 +3,7 @@ import * as net from "net";
 import { OutPacket } from "src/Messages/Outgoing/Out.packet";
 import { HabboDefs } from "../User/Habbo.defs";
 import { ArrayBufferUtils } from "src/Utils/ArrayBufferUtils";
+import { GameclientService } from "./Gameclient.service";
 
 export class GameclientDefs {
     public channel: ws | net.Socket;
@@ -10,6 +11,11 @@ export class GameclientDefs {
 
     constructor(channel: ws | net.Socket) {
         this.channel = channel;
+    }
+
+    public destroy(): void {
+        this.channel = null;
+        this.habbo = null;
     }
 
     public send(message: OutPacket | Array<OutPacket>): void {

@@ -35,7 +35,7 @@ export class SecureLoginEvent extends MessageHandler {
                 if (habbo != null) {
                     habbo.client = this.gameClient;
                     this.gameClient.habbo = habbo;
-                    await this.habboService.setOnline(habbo.habboInfo.id);
+                    await habbo.setOnline(habbo.habboInfo.id);
 
                     if (this.gameClient.habbo.habboInfo == null) {
                         return;

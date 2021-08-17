@@ -5,8 +5,6 @@ import { GameclientService } from "src/Games/GameClient/Gameclient.service";
 import { MessagesService } from "src/Messages/Messages.service";
 import { InPacket } from "src/Messages/Incoming/In.packet";
 import { GameclientDefs } from "src/Games/GameClient/Gameclient.defs";
-import { ArrayBufferUtils } from "src/Utils/ArrayBufferUtils";
-import { OutPacket } from "src/Messages/Outgoing/Out.packet";
 
 @Injectable()
 export class FlashNetworkingService {
@@ -39,10 +37,13 @@ export class FlashNetworkingService {
                     "  </cross-domain-policy>";
 
                     socket.write(Buffer.from(xml, 'utf8'));
-                    socket.end();
+                    //socket.end();
                 }
                 var gameClient: GameclientDefs = self.gameclientService.users.get(id);
                 self.messagesService.handlePacket(gameClient, inPacket, 'FLASH');
+            });
+            socket.on('close', (error: boolean) => {
+                self.gameclientService.destroy(id);
             });
         });
 

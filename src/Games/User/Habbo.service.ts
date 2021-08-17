@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserEntity } from 'src/Core/Database/User/User.entity';
 import { UserService } from "src/Core/Database/User/User.service";
-import { UpdateResult } from 'typeorm';
 import { FriendshipService } from '../Friendship/Friendship.service';
 import { GameclientService } from '../GameClient/Gameclient.service';
 import { PermissionService } from '../Permission/Permission.service';
@@ -32,14 +31,6 @@ export class HabboService {
             this.logger.log(habbo.habboInfo.username + " is logged in from " + habbo.habboInfo.ipCurrent);
             return habbo;
         });
-    }
-
-    public async setOnline(userId: number): Promise<UpdateResult> {
-        return await this.userService.changeState(userId, '1');
-    }
-
-    public async setOffline(userId: number): Promise<UpdateResult> {
-        return await this.userService.changeState(userId, '0');
     }
 
     public cloneCheck(userId: number): HabboDefs {

@@ -48,7 +48,6 @@ export class FriendsComposer extends MessageComposer {
         var messages: Array<OutPacket> = new Array<OutPacket>();
         var friends: Array<MessengerBuddyDefs> = new Array<MessengerBuddyDefs>();
 
-
         var totalPages: number = (friendsList.size / 750.0);
         var page: number = 0;
 

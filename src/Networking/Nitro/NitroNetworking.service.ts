@@ -5,7 +5,6 @@ import { GameclientService } from "src/Games/GameClient/Gameclient.service";
 import { InPacket } from "src/Messages/Incoming/In.packet";
 import { MessagesService } from "src/Messages/Messages.service";
 import * as ws from "ws";
-import * as http from "http";
 
 @Injectable()
 export class NitroNetworkingService {
@@ -37,7 +36,7 @@ export class NitroNetworkingService {
                 self.messagesService.handlePacket(gameClient, inPacket, 'NITRO');
             }
             ws.onclose = function() {
-                
+                self.gameclientService.destroy(id);
             }
         });
         this.logger.log("Started GameServer for Nitro on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_nitro") + "");

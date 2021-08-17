@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryColumn, Column, OneToOne, JoinTable, JoinColumn } from "typeorm";
 import { UserEntity } from "../User/User.entity";
 
 @Entity('messenger_friendships')
@@ -18,7 +18,7 @@ export class MessengerFriendsEntity {
     @Column()
     friends_since: number;
 
-    @ManyToOne(type => UserEntity)
-    @JoinColumn({ name: "user_two_id" })
+    @OneToOne(type => UserEntity)
+    @JoinColumn({ referencedColumnName: "id", name: "user_two_id" })
     habbo: UserEntity;
 }

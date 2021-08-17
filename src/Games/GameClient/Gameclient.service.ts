@@ -45,11 +45,16 @@ export class GameclientService {
         }
 
         return null;
-
-        return null;
     }
 
     public get userCounter(): number {
         return this.users.size;
+    }
+
+    public async destroy(id: number): Promise<void> {
+        await this.getHabbo(this.users.get(id).habbo.habboInfo.id).setOffline(this.users.get(id).habbo.habboInfo.id);
+        this.logger.log(this.getHabbo(this.users.get(id).habbo.habboInfo.id).habboInfo.username + " disconnected");
+        this.users.get(id).destroy();
+        this.users.delete(id);
     }
 }
