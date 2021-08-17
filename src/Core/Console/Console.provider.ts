@@ -24,12 +24,14 @@ export class ConsoleProvider {
                 case 'shutdown':
                     this.logger.warn("Apollo is in shutdown!");
                     await DelayUtils.sleep(5000);
+                    this.gameclientService.destroyAll();
                     this.nitroNetworkingService.destroy();
                     this.flashNetworkingService.destroy();
-                    this.gameclientService.destroyAll();
                     this.logger.log("Apollo is shutdowned with success");
                     await DelayUtils.sleep(5000);
                     process.exit();
+                default:
+                    this.logger.error(input + " is an unsoppported command!");
                 break;
             }
         })

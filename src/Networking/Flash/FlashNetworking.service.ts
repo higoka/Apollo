@@ -45,13 +45,13 @@ export class FlashNetworkingService {
                 var gameClient: GameclientDefs = self.gameclientService.users.get(id);
                 self.messagesService.handlePacket(gameClient, inPacket, 'FLASH');
             });
-            socket.on('close', (error: boolean) => {
+            socket.on('close', (err: boolean) => {
                 self.gameclientService.users.get(id).destroy(self.gameclientService);
             });
         });
 
         server.listen(this.configurationService.getString("game.tcp.port_flash"));
-        
+
         this.logger.log("Started GameServer for Flash on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_flash"));
     }
 

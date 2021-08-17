@@ -37,8 +37,10 @@ export class NitroNetworkingService {
                 var gameClient: GameclientDefs = self.gameclientService.users.get(id);
                 self.messagesService.handlePacket(gameClient, inPacket, 'NITRO');
             }
-            ws.onclose = function() {
-                self.gameclientService.users.get(id).destroy(self.gameclientService);
+            ws.onclose = function(event: ws.CloseEvent) {
+                if (event.code == 1001) {
+                    self.gameclientService.users.get(id).destroy(self.gameclientService);
+                }
             }
         });
         this.logger.log("Started GameServer for Nitro on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_nitro"));

@@ -3,6 +3,7 @@ import * as ws from "ws";
 import * as net from "net";
 import { HabboDefs } from "../User/Habbo.defs";
 import { GameclientDefs } from "./Gameclient.defs";
+import { OutPacket } from "src/Messages/Outgoing/Out.packet";
 
 @Injectable()
 export class GameclientService {
@@ -44,6 +45,12 @@ export class GameclientService {
         }
 
         return null;
+    }
+
+    public sendAll(message: OutPacket | Array<OutPacket>): void {
+        for (var user of this.users.values()) {
+            user.send(message);
+        }
     }
 
     public destroyAll(): void {
