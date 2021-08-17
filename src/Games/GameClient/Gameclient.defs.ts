@@ -11,16 +11,18 @@ export class GameclientDefs {
     private readonly logger = new Logger(HabboService.name);
     public channel: ws | net.Socket;
     public habbo: HabboDefs;
+    public id: number;
 
-    constructor(channel: ws | net.Socket) {
+    constructor(channel: ws | net.Socket, id: number) {
+        this.id = id;
         this.channel = channel;
     }
 
-    public async destroy(id: number, gameclientService: GameclientService): Promise<void> {
+    public async destroy(gameclientService: GameclientService): Promise<void> {
         if (this.habbo != null) {
             await this.habbo.setOffline(this.habbo.habboInfo.id);
             this.logger.log(this.habbo.habboInfo.username + " disconnected");
-            gameclientService.users.delete(id);
+            gameclientService.users.delete(this.id);
             this.channel = null;
             this.habbo = null;
         }

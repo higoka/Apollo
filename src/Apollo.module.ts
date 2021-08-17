@@ -6,10 +6,10 @@ import { NitroNetworkingModule } from './Networking/Nitro/NitroNetworking.module
 
 @Module({
     imports: [
+        CoreModule,
         NitroNetworkingModule,
         FlashNetworkingModule,
-        CoreModule,
-        GameModule
+        GameModule,
     ]
 })
 export class ApolloModule {}

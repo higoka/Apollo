@@ -9,6 +9,7 @@ import { GameclientDefs } from "src/Games/GameClient/Gameclient.defs";
 @Injectable()
 export class FlashNetworkingService {
     private readonly logger = new Logger(FlashNetworkingService.name);
+    private server: net.Server;
 
     constructor(
         private readonly configurationService: ConfigurationService,
@@ -17,6 +18,7 @@ export class FlashNetworkingService {
     ) {
 
         var server: net.Server = net.createServer();
+        this.server = server;
 
         var self = this;
 
@@ -44,12 +46,17 @@ export class FlashNetworkingService {
                 self.messagesService.handlePacket(gameClient, inPacket, 'FLASH');
             });
             socket.on('close', (error: boolean) => {
-                self.gameclientService.users.get(id).destroy(id, self.gameclientService);
+                self.gameclientService.users.get(id).destroy(self.gameclientService);
             });
         });
 
         server.listen(this.configurationService.getString("game.tcp.port_flash"));
         
-        this.logger.log("Started GameServer for Flash on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_flash") + "");
+        this.logger.log("Started GameServer for Flash on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_flash"));
+    }
+
+    public destroy(): void {
+        this.logger.log("GameServer for Flash successfully stopped");
+        this.server.close();
     }
 }

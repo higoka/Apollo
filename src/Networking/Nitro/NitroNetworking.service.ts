@@ -9,6 +9,7 @@ import * as ws from "ws";
 @Injectable()
 export class NitroNetworkingService {
     private readonly logger = new Logger(NitroNetworkingService.name);
+    private server: ws.Server;
 
     constructor(
         private readonly configurationService: ConfigurationService,
@@ -19,6 +20,7 @@ export class NitroNetworkingService {
             host: this.configurationService.getString("game.tcp.ip"),
             port: this.configurationService.getInt("game.tcp.port_nitro")
         });
+        this.server = server;
 
         var self = this;
 
@@ -36,9 +38,14 @@ export class NitroNetworkingService {
                 self.messagesService.handlePacket(gameClient, inPacket, 'NITRO');
             }
             ws.onclose = function() {
-                self.gameclientService.users.get(id).destroy(id, self.gameclientService);
+                self.gameclientService.users.get(id).destroy(self.gameclientService);
             }
         });
-        this.logger.log("Started GameServer for Nitro on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_nitro") + "");
+        this.logger.log("Started GameServer for Nitro on " + this.configurationService.getString("game.tcp.ip") + ":" + this.configurationService.getInt("game.tcp.port_nitro"));
+    }
+
+    public destroy(): void {
+        this.logger.log("GameServer for Nitro successfully stopped");
+        this.server.close();
     }
 }
