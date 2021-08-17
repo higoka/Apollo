@@ -1,13 +1,11 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import * as ws from "ws";
 import * as net from "net";
 import { HabboDefs } from "../User/Habbo.defs";
 import { GameclientDefs } from "./Gameclient.defs";
-import { HabboService } from "../User/Habbo.service";
 
 @Injectable()
 export class GameclientService {
-    private readonly logger = new Logger(HabboService.name);
     public users: Map<number, GameclientDefs>;
 
     constructor() {
@@ -49,12 +47,5 @@ export class GameclientService {
 
     public get userCounter(): number {
         return this.users.size;
-    }
-
-    public async destroy(id: number): Promise<void> {
-        await this.getHabbo(this.users.get(id).habbo.habboInfo.id).setOffline(this.users.get(id).habbo.habboInfo.id);
-        this.logger.log(this.getHabbo(this.users.get(id).habbo.habboInfo.id).habboInfo.username + " disconnected");
-        this.users.get(id).destroy();
-        this.users.delete(id);
     }
 }

@@ -36,14 +36,15 @@ export class FlashNetworkingService {
                     "  <allow-access-from domain=\"*\" to-ports=\"1-31111\" />" +
                     "  </cross-domain-policy>";
 
-                    socket.write(Buffer.from(xml, 'utf8'));
-                    //socket.end();
+                    socket.write(Buffer.from(xml, 'utf8'), (err: Error) => {
+                        socket.end();
+                    });
                 }
                 var gameClient: GameclientDefs = self.gameclientService.users.get(id);
                 self.messagesService.handlePacket(gameClient, inPacket, 'FLASH');
             });
             socket.on('close', (error: boolean) => {
-                self.gameclientService.destroy(id);
+                self.gameclientService.users.get(id).destroy(id, self.gameclientService);
             });
         });
 

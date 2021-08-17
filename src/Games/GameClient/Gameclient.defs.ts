@@ -1,11 +1,14 @@
 import * as ws from "ws";
 import * as net from "net";
+import { Logger } from "@nestjs/common";
 import { OutPacket } from "src/Messages/Outgoing/Out.packet";
 import { HabboDefs } from "../User/Habbo.defs";
 import { ArrayBufferUtils } from "src/Utils/ArrayBufferUtils";
+import { HabboService } from "../User/Habbo.service";
 import { GameclientService } from "./Gameclient.service";
 
 export class GameclientDefs {
+    private readonly logger = new Logger(HabboService.name);
     public channel: ws | net.Socket;
     public habbo: HabboDefs;
 
@@ -13,9 +16,14 @@ export class GameclientDefs {
         this.channel = channel;
     }
 
-    public destroy(): void {
-        this.channel = null;
-        this.habbo = null;
+    public async destroy(id: number, gameclientService: GameclientService): Promise<void> {
+        if (this.habbo != null) {
+            await this.habbo.setOffline(this.habbo.habboInfo.id);
+            this.logger.log(this.habbo.habboInfo.username + " disconnected");
+            gameclientService.users.delete(id);
+            this.channel = null;
+            this.habbo = null;
+        }
     }
 
     public send(message: OutPacket | Array<OutPacket>): void {

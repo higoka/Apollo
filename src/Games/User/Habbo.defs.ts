@@ -14,7 +14,7 @@ export class HabboDefs {
     public habboInfo: HabboInfoDefs;
     public habboStats: HabboStatsDefs;
     public pathfinder: PathfinderDefs;
-    public friends: FriendshipService;
+    public messenger: FriendshipService;
     private userService: UserService;
 
     constructor(data: UserEntity, permissionService: PermissionService, userService: UserService, friendsshipService: FriendshipService) {
@@ -24,8 +24,8 @@ export class HabboDefs {
         this.habboStats = HabboStatsDefs.load(this.habboInfo, userService);
         this.pathfinder = new PathfinderDefs();
         this.pathfinder.type = PathfinderTypeEnum.USER;
-        this.friends = friendsshipService;
-        this.friends.loadFriends(this);
+        this.messenger = friendsshipService;
+        this.messenger.loadFriends(this);
 
         // TODO: Add messenger and inventory
     }
