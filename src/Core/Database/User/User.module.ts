@@ -1,18 +1,18 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { DatabaseModule } from '../Database.module';
+import { UserManager } from './User.manager';
 import { UserProvider } from './User.provider';
-import { UserService } from './User.service';
 
 @Module({
     imports: [
-        DatabaseModule
+        forwardRef(() => DatabaseModule)
     ],
     providers: [
         UserProvider,
-        UserService
+        UserManager
     ],
     exports: [
-        UserService
+        UserManager
     ]
 })
 export class UserModule {}

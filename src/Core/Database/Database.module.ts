@@ -1,16 +1,18 @@
-import { Module } from '@nestjs/common';
-import { ConfigurationModule } from '../Configuration/Configuration.module';
-import { DatabaseProvider } from './Database.provider';
+import { forwardRef, Module } from '@nestjs/common';
+import { ApolloModule } from 'src/Apollo.module';
+import { DatabaseManager } from "./Database.manager";
+import { UserModule } from './User/User.module';
 
 @Module({
     imports: [
-        ConfigurationModule
+        forwardRef(() => ApolloModule),
+        forwardRef(() => UserModule)
     ],
     providers: [
-        DatabaseProvider
+        DatabaseManager
     ],
     exports: [
-        DatabaseProvider
+        DatabaseManager
     ]
 })
 export class DatabaseModule {}

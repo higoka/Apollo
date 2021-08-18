@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { DatabaseProvider } from '../Database.provider';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { DatabaseManager } from '../Database.manager';
 import { Connection, Repository } from 'typeorm';
 import { UserEntity } from "./User.entity";
 import { UserCurrencyEntity } from './UserCurrency.entity';
@@ -9,31 +9,32 @@ import { UserSettingsEntity } from './UserSettings.entity';
 @Injectable()
 export class UserProvider {
     constructor(
-        private readonly databaseProvider: DatabaseProvider
+        @Inject(forwardRef(() => DatabaseManager))
+        private readonly databaseManager: DatabaseManager
     ) {
         
     }
 
-    get userRepository(): Promise<Repository<UserEntity>> {
-        return this.databaseProvider.getConnection().then((conn: Connection) => {
+    get User(): Promise<Repository<UserEntity>> {
+        return this.databaseManager.getConnection().then((conn: Connection) => {
             return conn.getRepository(UserEntity);
         });
     }
 
-    get userCurrencyRepository(): Promise<Repository<UserCurrencyEntity>> {
-        return this.databaseProvider.getConnection().then((conn: Connection) => {
+    get UserCurrencies(): Promise<Repository<UserCurrencyEntity>> {
+        return this.databaseManager.getConnection().then((conn: Connection) => {
             return conn.getRepository(UserCurrencyEntity);
         });
     }
 
-    get userPermissionRepository(): Promise<Repository<UserPermissionEntity>> {
-        return this.databaseProvider.getConnection().then((conn: Connection) => {
+    get UserPermissions(): Promise<Repository<UserPermissionEntity>> {
+        return this.databaseManager.getConnection().then((conn: Connection) => {
             return conn.getRepository(UserPermissionEntity);
         });
     }
 
-    get userSettingsRepository(): Promise<Repository<UserSettingsEntity>> {
-        return this.databaseProvider.getConnection().then((conn: Connection) => {
+    get UserSettings(): Promise<Repository<UserSettingsEntity>> {
+        return this.databaseManager.getConnection().then((conn: Connection) => {
             return conn.getRepository(UserSettingsEntity);
         });
     }

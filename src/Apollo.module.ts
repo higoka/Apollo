@@ -1,15 +1,22 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
+import { ApolloManager } from './Apollo.manager';
 import { CoreModule } from './Core/Core.module';
-import { GameModule } from './Games/Game.module';
-import { FlashNetworkingModule } from './Networking/Flash/FlashNetworking.module';
-import { NitroNetworkingModule } from './Networking/Nitro/NitroNetworking.module';
+import { GameModule } from './HabboHotel/Game.module';
+import { MessageModule } from './Message/Message.module';
+import { NetworkingModule } from './Networking/Networking.module';
 
 @Module({
     imports: [
-        CoreModule,
-        NitroNetworkingModule,
-        FlashNetworkingModule,
-        GameModule,
+        forwardRef(() => CoreModule),
+        forwardRef(() => NetworkingModule),
+        forwardRef(() => GameModule),
+        forwardRef(() => MessageModule)
+    ],
+    providers: [
+        ApolloManager
+    ],
+    exports: [
+        ApolloManager
     ]
 })
 export class ApolloModule {}
