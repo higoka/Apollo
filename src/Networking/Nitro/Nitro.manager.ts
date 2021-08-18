@@ -20,10 +20,10 @@ export class NitroManager {
 
         this.server.on('connection', function connection(socket: ws) {
             socket.binaryType = 'arraybuffer';
-            socket.onmessage = function(incoming: ws.MessageEvent) {
-
+            socket.onmessage = (incoming: ws.MessageEvent) => {
+                
             }
-            socket.onclose = function(event: ws.CloseEvent) {
+            socket.onclose = (event: ws.CloseEvent) => {
                 
             }
         })
