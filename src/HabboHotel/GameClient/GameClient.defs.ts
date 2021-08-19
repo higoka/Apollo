@@ -7,10 +7,8 @@ import { HabboDefs } from "../Habbo/Habbo.defs";
 export class GameClientDefs {
     private habbo: HabboDefs;
     private channel: ws | net.Socket;
-    private id: number;
 
-    constructor(id: number, channel: ws | net.Socket) {
-        this.id = id;
+    constructor(channel: ws | net.Socket) {
         this.channel = channel;
     }
 
@@ -25,7 +23,6 @@ export class GameClientDefs {
     public destroy(): void {
         this.channel = null;
         this.habbo = null;
-        this.id = null;
     }
 
     public send(message: OutgoingPacket | Array<OutgoingPacket>): void {

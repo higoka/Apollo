@@ -7,6 +7,7 @@ import { GameClientDefs } from './GameClient.defs';
 @Injectable()
 export class GameClientManager {
     private users: Map<number, GameClientDefs>;
+    private lastConnectionId: number = 1;
 
     constructor(
         @Inject(forwardRef(() => ApolloManager))
@@ -16,8 +17,23 @@ export class GameClientManager {
     }
 
     public addUser(id: number, socket: ws | net.Socket): boolean {
-        var gc: GameClientDefs = new GameClientDefs(id, socket);
+        var gc: GameClientDefs = new GameClientDefs(socket);
         return this.users.set(id, gc) == null;
+    }
+
+    public get LastConnectionId(): number {
+        return this.lastConnectionId;
+    }
+
+    public updateConnectionId(state: string): void {
+        switch (state) {
+            case 'connection':
+                this.lastConnectionId++;
+            break;
+            case 'disconnection':
+                this.lastConnectionId--;
+            break;
+        }
     }
 
     public get userCounter(): number {

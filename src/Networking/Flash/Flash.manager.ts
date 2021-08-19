@@ -1,7 +1,9 @@
 import * as net from "net";
 import { forwardRef, Inject, Injectable, Logger } from "@nestjs/common";
 import { ApolloManager } from "src/Apollo.manager";
+import { GameClientManager } from "src/HabboHotel/GameClient/GameClient.manager";
 import { IncomingPacket } from "src/Message/Incoming/Incoming.packet";
+import { GameClientDefs } from "src/HabboHotel/GameClient/GameClient.defs";
 
 @Injectable()
 export class FlashManager {
@@ -15,18 +17,25 @@ export class FlashManager {
         this.server = net.createServer();
 
         var self = this;
-        var connectionId: number = 1;
 
         this.server.on('connection', (socket: net.Socket) => {
-            self.apolloManager.GameManager.GameClientManager.addUser(connectionId, socket);
+            var gcm: GameClientManager = self.apolloManager.GameManager.GameClientManager;
+            gcm.addUser(gcm.LastConnectionId, socket);
             socket.on('connect', () => {
-                connectionId++;
+                gcm.updateConnectionId('connection');
             })
             socket.on('data', (data: Buffer) => {
-                
+                var packet: IncomingPacket = new IncomingPacket(data.buffer);
+                packet.readInt();
+                var opcode: number = packet.readShort();
+                packet.opcode = opcode;
+                var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
+                self.apolloManager.MessageManager.execute(gameClient, packet, 'NITRO');
             })
             socket.on('close', (err: boolean) => {
-                
+                var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
+                gameClient.destroy();
+                gcm.updateConnectionId('disconnection');
             })
         })
 
