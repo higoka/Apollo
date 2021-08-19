@@ -3,8 +3,6 @@ import { InsertResult, Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from './User.entity';
 import { UserProvider } from './User.provider';
 import { UserCurrencyEntity } from './UserCurrency.entity';
-import { UserPermissionEntity } from './UserPermission.entity';
-import { UserSettingsEntity } from './UserSettings.entity';
 
 @Injectable()
 export class UserManager {
@@ -36,36 +34,6 @@ export class UserManager {
         var repository: Repository<UserEntity> = await this.userProvider.User;
         return repository.update(userId, {
             online: state
-        });
-    }
-
-    async findPermission(): Promise<UserPermissionEntity[]> {
-        var repository: Repository<UserPermissionEntity> = await this.userProvider.UserPermissions;
-        return repository.find();
-    }
-
-    async insertHabboStats(userId: number): Promise<InsertResult> {
-        var repository: Repository<UserSettingsEntity> = await this.userProvider.UserSettings;
-        return repository.insert({
-            user_id: userId
-        });
-    }
-
-    async HabboStatsCounter(userId: number): Promise<number> {
-        var repository: Repository<UserSettingsEntity> = await this.userProvider.UserSettings;
-        return repository.count({
-            where: {
-                user_id: userId
-            }
-        })
-    }
-
-    async getHabboStats(userId: number): Promise<UserSettingsEntity> {
-        var repository: Repository<UserSettingsEntity> = await this.userProvider.UserSettings;
-        return repository.findOne({
-            where: {
-                user_id: userId
-            }
         });
     }
 }

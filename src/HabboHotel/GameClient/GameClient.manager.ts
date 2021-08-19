@@ -6,7 +6,7 @@ import { GameClientDefs } from './GameClient.defs';
 
 @Injectable()
 export class GameClientManager {
-    public users: Map<number, GameClientDefs>;
+    private users: Map<number, GameClientDefs>;
 
     constructor(
         @Inject(forwardRef(() => ApolloManager))
@@ -22,5 +22,9 @@ export class GameClientManager {
 
     public get userCounter(): number {
         return this.users.size;
+    }
+
+    public getUser(connectionId: number): GameClientDefs {
+        return this.users.get(connectionId);
     }
 }

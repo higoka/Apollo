@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as rl from "readline";
+import { DelayUtils } from 'src/Utils/DelayUtils';
 
 @Injectable()
 export class ConsoleManager {
@@ -15,7 +16,9 @@ export class ConsoleManager {
             switch (input) {
                 case 'shutdown':
                     this.logger.warn("Apollo is in shutdown!");
+                    await DelayUtils.sleep(3000);
                     this.logger.log("Apollo is shutdowned with success");
+                    await DelayUtils.sleep(5000);
                     process.exit();
                 default:
                     this.logger.error(input + " is an unsoppported command!");

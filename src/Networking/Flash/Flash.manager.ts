@@ -1,6 +1,7 @@
 import * as net from "net";
 import { forwardRef, Inject, Injectable, Logger } from "@nestjs/common";
 import { ApolloManager } from "src/Apollo.manager";
+import { IncomingPacket } from "src/Message/Incoming/Incoming.packet";
 
 @Injectable()
 export class FlashManager {
@@ -14,13 +15,18 @@ export class FlashManager {
         this.server = net.createServer();
 
         var self = this;
+        var connectionId: number = 1;
 
         this.server.on('connection', (socket: net.Socket) => {
+            self.apolloManager.GameManager.GameClientManager.addUser(connectionId, socket);
+            socket.on('connect', () => {
+                connectionId++;
+            })
             socket.on('data', (data: Buffer) => {
-
+                
             })
             socket.on('close', (err: boolean) => {
-
+                
             })
         })
 

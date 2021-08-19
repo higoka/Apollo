@@ -19,15 +19,6 @@ export class UserEntity {
 
     @Column()
     gender: string;
-
-    @Column()
-    credits: number;
-
-    @Column()
-    pixels: number;
-    
-    @Column()
-    points: number;
     
     @Column()
     auth_ticket: string;
@@ -39,14 +30,14 @@ export class UserEntity {
     online: string;
     
     @Column()
-    ip_register: string;
+    register_ip: string;
     
     @Column()
-    ip_current: string;
+    current_ip: string;
 
     @Column()
-    account_created: string;
+    account_created: number;
 
     @Column()
-    last_online: string;
+    last_online: number;
 }
