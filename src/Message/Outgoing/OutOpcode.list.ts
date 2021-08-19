@@ -346,10 +346,10 @@ export class OutOpcodeList {
     public static FurniMaticRewardsComposer: number = 3164;
     public static NuxItemListComposer: number = 3575;
     public static NuxSuggestFreeGiftsMessageComposer: number = 3639;
-	public static MassEventComposer: number = -1;
-	public static CraftableProductsMessageComposer: number = 1000;
-	public static CraftingRecipeMessageComposer: number = 2774;
-	public static CraftingResultMessageComposer: number = 3128;
-	public static CraftingFoundMessageComposer: number = 2124;
+    public static MassEventComposer: number = -1;
+    public static CraftableProductsMessageComposer: number = 1000;
+    public static CraftingRecipeMessageComposer: number = 2774;
+    public static CraftingResultMessageComposer: number = 3128;
+    public static CraftingFoundMessageComposer: number = 2124;
     public static RoomCustomizedAlertComposer: number = 934;
 }

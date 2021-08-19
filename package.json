@@ -1,5 +1,5 @@
 {
-  "name": "apollo",
+  "name": "@cosimoceleste/apollo",
   "version": "0.0.1",
   "description": "Apollo Server for Nitro Client",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosimoceleste/Apollo-nestjs.git"
+    "url": "https://github.com/cosimoceleste/Apollo.git"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.17",
