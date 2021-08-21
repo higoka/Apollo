@@ -1,33 +1,11 @@
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import { Entity, PrimaryColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { UserInfoEntity } from "./UserInfo.entity";
+import { UserSettingsEntity } from "./UserSettngs.entity";
 
 @Entity('users')
 export class UserEntity {
     @PrimaryColumn()
     id: number;
-
-    @Column()
-    username: string;
-
-    @Column()
-    motto: string;
-
-    @Column()
-    rank: number;
-
-    @Column()
-    look: string;
-
-    @Column()
-    gender: string;
-    
-    @Column()
-    auth_ticket: string;
-    
-    @Column()
-    home_room: number;
-
-    @Column()
-    online: string;
     
     @Column()
     register_ip: string;
@@ -35,9 +13,11 @@ export class UserEntity {
     @Column()
     current_ip: string;
 
-    @Column()
-    account_created: number;
+    @OneToOne(type => UserInfoEntity)
+    @JoinColumn({ name: "id", referencedColumnName: "user_id" })
+    user_info: UserInfoEntity;
 
-    @Column()
-    last_online: number;
+    @OneToOne(type => UserSettingsEntity)
+    @JoinColumn({ name: "id", referencedColumnName: "user_id" })
+    user_settings: UserSettingsEntity;
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { InsertResult, Repository, UpdateResult } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from './User.entity';
 import { UserProvider } from './User.provider';
 import { UserCurrencyEntity } from './UserCurrency.entity';
+import { UserInfoEntity } from './UserInfo.entity';
 
 @Injectable()
 export class UserManager {
@@ -15,8 +16,11 @@ export class UserManager {
     async findBySSO(sso: string): Promise<UserEntity> {
         var repository: Repository<UserEntity> = await this.userProvider.User;
         return repository.findOne({
-            where: { 
-                auth_ticket: sso
+            relations: ['user_info', 'user_settings'],
+            where: {
+                user_info: {
+                    auth_ticket: sso
+                }
             }
         });
     }
@@ -31,9 +35,9 @@ export class UserManager {
     }
 
     async changeState(userId: number, state: string): Promise<UpdateResult> {
-        var repository: Repository<UserEntity> = await this.userProvider.User;
+        var repository: Repository<UserInfoEntity> = await this.userProvider.UserInfo;
         return repository.update(userId, {
-            online: state
+            online: parseInt('1')
         });
     }
 }

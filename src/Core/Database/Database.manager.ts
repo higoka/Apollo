@@ -4,6 +4,8 @@ import { createConnection, getConnectionManager, getConnection, Connection } fro
 import { UserEntity } from './User/User.entity';
 import { UserManager } from './User/User.manager';
 import { UserCurrencyEntity } from './User/UserCurrency.entity';
+import { UserInfoEntity } from './User/UserInfo.entity';
+import { UserSettingsEntity } from './User/UserSettngs.entity';
 
 @Injectable()
 export class DatabaseManager {
@@ -27,6 +29,8 @@ export class DatabaseManager {
             database: this.apolloManager.CoreManager.ConfigurationManager.getString("database.source"),
             entities: [
                 UserEntity,
+                UserInfoEntity,
+                UserSettingsEntity,
                 UserCurrencyEntity
             ],
             synchronize: false

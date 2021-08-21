@@ -3,6 +3,7 @@ import { DatabaseManager } from '../Database.manager';
 import { Connection, Repository } from 'typeorm';
 import { UserEntity } from "./User.entity";
 import { UserCurrencyEntity } from './UserCurrency.entity';
+import { UserInfoEntity } from './UserInfo.entity';
 
 @Injectable()
 export class UserProvider {
@@ -16,6 +17,12 @@ export class UserProvider {
     get User(): Promise<Repository<UserEntity>> {
         return this.databaseManager.getConnection().then((conn: Connection) => {
             return conn.getRepository(UserEntity);
+        });
+    }
+
+    get UserInfo(): Promise<Repository<UserInfoEntity>> {
+        return this.databaseManager.getConnection().then((conn: Connection) => {
+            return conn.getRepository(UserInfoEntity);
         });
     }
 

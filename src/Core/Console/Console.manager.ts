@@ -15,6 +15,7 @@ export class ConsoleManager {
         console.on('line', async (input: string) => {
             switch (input) {
                 case 'shutdown':
+                case 'stop':
                     this.logger.warn("Apollo is in shutdown!");
                     await DelayUtils.sleep(3000);
                     this.logger.log("Apollo is shutdowned with success");

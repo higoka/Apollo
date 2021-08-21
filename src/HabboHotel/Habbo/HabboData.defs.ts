@@ -20,15 +20,12 @@ export class HabboDataDefs {
     constructor(data: UserEntity, apolloManager: ApolloManager) {
         this.apolloManager = apolloManager;
         this.id = data.id;
-        this.username = data.username;
-        this.motto = data.motto;
-        this.look = data.look;
-        this.gender = data.gender;
+        this.username = data.user_info.username;
+        this.motto = data.user_info.motto;
+        this.look = data.user_info.look;
+        this.gender = data.user_info.gender;
         this.ipRegister = data.register_ip;
         this.ipCurrent = data.current_ip;
-        this.accountCreated = data.account_created;
-        this.lastOnline = data.last_online;
-        this.homeRoom = data.home_room;
         this.online = false;
     }
 

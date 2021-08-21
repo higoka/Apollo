@@ -1,10 +1,11 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { ApolloManager } from 'src/Apollo.manager';
 import { UserEntity } from 'src/Core/Database/User/User.entity';
 import { HabboDefs } from './Habbo.defs';
 
 @Injectable()
 export class HabboManager {
+    private readonly logger: Logger = new Logger(HabboManager.name);
     private usersOnline: Map<number, HabboDefs>;
 
     constructor(
@@ -20,6 +21,8 @@ export class HabboManager {
 
         return this.apolloManager.CoreManager.DatabaseManager.UserManager.findBySSO(sso).then((user: UserEntity) => {
             habbo = new HabboDefs(user, this.apolloManager);
+
+            this.logger.log(habbo.getHabboData.getUsername + " is logged in from " + habbo.getHabboData.getCurrentIp);
             return habbo;
         })
     }

@@ -30,7 +30,7 @@ export class FlashManager {
                 var opcode: number = packet.readShort();
                 packet.opcode = opcode;
                 var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
-                self.apolloManager.MessageManager.execute(gameClient, packet, 'NITRO');
+                self.apolloManager.MessageManager.execute(gameClient, packet, 'FLASH');
             })
             socket.on('close', (err: boolean) => {
                 var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
