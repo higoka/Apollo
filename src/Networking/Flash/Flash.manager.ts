@@ -28,6 +28,17 @@ export class FlashManager {
                 var packet: IncomingPacket = new IncomingPacket(data.buffer);
                 packet.readInt();
                 var opcode: number = packet.readShort();
+                if (opcode == 26979) {
+                    var xml: string = "<?xml version=\"1.0\"?>" +
+                    "  <!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\">\n" +
+                    "  <cross-domain-policy>" +
+                    "  <allow-access-from domain=\"*\" to-ports=\"1-31111\" />" +
+                    "  </cross-domain-policy>";
+
+                    socket.write(Buffer.from(xml, 'utf8'), (err: Error) => {
+                        socket.end();
+                    });
+                }
                 packet.opcode = opcode;
                 var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
                 self.apolloManager.MessageManager.execute(gameClient, packet, 'FLASH');
