@@ -1,4 +1,5 @@
 import { ApolloManager } from "src/Apollo.manager";
+import { UserLoggedInEvent } from "src/Core/Plugin/Events/UserLoggedIn.event";
 import { HabboDefs } from "src/HabboHotel/Habbo/Habbo.defs";
 import { AuthenticationOKMessageEvent } from "src/Message/Outgoing/Handshake/AuthenticationOKMessageEvent";
 import { MessageReceiver } from "../Message.receiver";
@@ -23,6 +24,10 @@ export class SSOTicketMessageEvent extends MessageReceiver {
             if (habbo != null) {
                 habbo.setClient = this.GameClient;
                 this.GameClient.setHabbo = habbo;
+                var userLoggedEvent: UserLoggedInEvent = new UserLoggedInEvent();
+                userLoggedEvent.habbo = habbo;
+                userLoggedEvent.sso = sso;
+                this.apolloManager.EventEmitter.emit('user.logged.in', userLoggedEvent);
 
                 if (this.GameClient.getHabbo.getHabboData == null) {
                     return;

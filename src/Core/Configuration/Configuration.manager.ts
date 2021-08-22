@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ConfigurationManager {
@@ -11,18 +11,20 @@ export class ConfigurationManager {
         this.load();
     }
 
-    public load(): void {
+    private load(): void {
         this.data.clear();
 
-        var srcPath: string = path.join(__dirname, '../../');
-        var file: string = fs.readFileSync(srcPath.toString() + "/configuration.ini", 'utf-8');
+        var dir: string = path.join(__dirname, '../../../');
+        var file: string = fs.readFileSync(dir + "/configuration.ini", 'utf-8');
 
         var splitted: string[] = file.split("\n");
         for (var i = 0; i < splitted.length; i++) {
-            if (!splitted[i].startsWith("#")) {
-                var splitted2: string[] = splitted[i].replace("\r", "").split("=");
-                this.data.set(splitted2[0], splitted2[1]);
-            }            
+            if (splitted[i].startsWith("#")) {
+                continue;
+            }
+
+            var splitted2: string[] = splitted[i].replace("\r", "").split("=");
+            this.data.set(splitted2[0], splitted2[1]);
         }
     }
 

@@ -3,6 +3,7 @@ import { CoreManager } from './Core/Core.manager';
 import { GameManager } from './HabboHotel/Game.manager';
 import { MessageManager } from './Message/Message.manager';
 import { NetworkingManager } from './Networking/Networking.manager';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class ApolloManager {
@@ -10,9 +11,14 @@ export class ApolloManager {
         private readonly coreManager: CoreManager,
         private readonly networkingManager: NetworkingManager,
         private readonly messageManager: MessageManager,
-        private readonly gameManager: GameManager
+        private readonly gameManager: GameManager,
+        private readonly eventEmitter: EventEmitter2
     ) {
 
+    }
+
+    public get EventEmitter(): EventEmitter2 {
+        return this.eventEmitter;
     }
 
     public get GameManager(): GameManager {
