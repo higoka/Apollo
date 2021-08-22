@@ -14,7 +14,7 @@ export class ConfigurationManager {
     private load(): void {
         this.data.clear();
 
-        var dir: string = path.join(__dirname, '../../../');
+        var dir: string = path.join(__dirname, '../../../../');
         var file: string = fs.readFileSync(dir + "/configuration.ini", 'utf-8');
 
         var splitted: string[] = file.split("\n");

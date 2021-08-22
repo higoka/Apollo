@@ -10,7 +10,7 @@ export class PluginManager {
         @Inject(forwardRef(() => ApolloManager))
         private readonly apolloManager: ApolloManager
     ) {
-		
+        
     }
 
     public readEvent(event: string, callback: (event: PluginEventInterface) => void): void {
