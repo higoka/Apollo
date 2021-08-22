@@ -1,9 +1,10 @@
 import * as net from "net";
-import { forwardRef, Inject, Injectable, Logger } from "@nestjs/common";
-import { ApolloManager } from "src/Apollo.manager";
+import { Injectable, Logger } from "@nestjs/common";
 import { GameClientManager } from "src/HabboHotel/GameClient/GameClient.manager";
 import { IncomingPacket } from "src/Message/Incoming/Incoming.packet";
 import { GameClientDefs } from "src/HabboHotel/GameClient/GameClient.defs";
+import { MessageManager } from "src/Message/Message.manager";
+import { ConfigurationManager } from "src/Core/Configuration/Configuration.manager";
 
 @Injectable()
 export class FlashManager {
@@ -11,15 +12,16 @@ export class FlashManager {
     private server: net.Server;
 
     constructor(
-        @Inject(forwardRef(() => ApolloManager))
-        private readonly apolloManager: ApolloManager
+        private readonly gameClientManager: GameClientManager,
+        private readonly messageManager: MessageManager,
+        private readonly configurationManager: ConfigurationManager
     ) {
         this.server = net.createServer();
 
         var self = this;
 
         this.server.on('connection', (socket: net.Socket) => {
-            var gcm: GameClientManager = self.apolloManager.GameManager.GameClientManager;
+            var gcm: GameClientManager = self.gameClientManager;
             gcm.addUser(gcm.LastConnectionId, socket);
             socket.on('connect', () => {
                 gcm.updateConnectionId('connection');
@@ -41,7 +43,7 @@ export class FlashManager {
                 }
                 packet.opcode = opcode;
                 var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
-                self.apolloManager.MessageManager.execute(gameClient, packet, 'FLASH');
+                self.messageManager.execute(gameClient, packet, 'FLASH');
             })
             socket.on('close', (err: boolean) => {
                 var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
@@ -50,8 +52,8 @@ export class FlashManager {
             })
         })
 
-        this.server.listen(this.apolloManager.CoreManager.ConfigurationManager.getString("game.tcp.port_flash"));
+        this.server.listen(this.configurationManager.getString("game.tcp.port_flash"));
 
-        this.logger.log("Started GameServer for Flash on " + this.apolloManager.CoreManager.ConfigurationManager.getString("game.tcp.ip") + ":" + this.apolloManager.CoreManager.ConfigurationManager.getInt("game.tcp.port_flash"));
+        this.logger.log("Started GameServer for Flash on " + this.configurationManager.getString("game.tcp.ip") + ":" + this.configurationManager.getInt("game.tcp.port_flash"));
     }
 }

@@ -1,5 +1,5 @@
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
-import { ApolloManager } from 'src/Apollo.manager';
+import { Injectable, Logger } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PluginEventInterface } from './PluginEvent.interface';
 
 @Injectable()
@@ -7,13 +7,12 @@ export class PluginManager {
     private readonly logger = new Logger(PluginManager.name);
 
     constructor(
-        @Inject(forwardRef(() => ApolloManager))
-        private readonly apolloManager: ApolloManager
+        public readonly eventEmitter: EventEmitter2
     ) {
         
     }
 
     public readEvent(event: string, callback: (event: PluginEventInterface) => void): void {
-        this.apolloManager.EventEmitter.on(event, callback);
+        this.eventEmitter.on(event, callback);
     }
 }

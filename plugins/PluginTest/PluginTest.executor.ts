@@ -1,16 +1,16 @@
 import { forwardRef, Inject, Injectable, Logger } from "@nestjs/common";
-import { ApolloManager } from "src/Apollo.manager";
 import { UserLoggedInEvent } from "src/Core/Plugin/Events/UserLoggedIn.event";
+import { PluginManager } from "src/Core/Plugin/Plugin.manager";
 
 @Injectable()
 export class PluginTestExecutor {
     private readonly logger = new Logger(PluginTestExecutor.name);
 
     constructor(
-        @Inject(forwardRef(() => ApolloManager))
-        private readonly apolloManager: ApolloManager
+        @Inject(forwardRef(() => PluginManager))
+        private readonly pluginManager: PluginManager
     ) {
-        this.apolloManager.CoreManager.PluginManager.readEvent("user.logged.in", (event: UserLoggedInEvent) => {
+        this.pluginManager.readEvent("user.logged.in", (event: UserLoggedInEvent) => {
             this.logger.log(event.habbo.getHabboData.getUsername + " is logged to client");
         })
     }

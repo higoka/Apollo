@@ -1,10 +1,14 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { ApolloModule } from 'src/Apollo.module';
+import { Module } from '@nestjs/common';
+import { ConfigurationModule } from 'src/Core/Configuration/Configuration.module';
+import { GameClientModule } from 'src/HabboHotel/GameClient/GameClient.module';
+import { MessageModule } from 'src/Message/Message.module';
 import { NitroManager } from './Nitro.manager';
 
 @Module({
     imports: [
-        forwardRef(() => ApolloModule)
+        MessageModule,
+        GameClientModule,
+        ConfigurationModule
     ],
     providers: [
         NitroManager

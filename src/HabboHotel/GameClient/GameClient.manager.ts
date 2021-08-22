@@ -1,7 +1,6 @@
 import * as ws from "ws";
 import * as net from "net";
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { ApolloManager } from 'src/Apollo.manager';
+import { Injectable } from '@nestjs/common';
 import { GameClientDefs } from './GameClient.defs';
 
 @Injectable()
@@ -9,10 +8,7 @@ export class GameClientManager {
     private users: Map<number, GameClientDefs>;
     private lastConnectionId: number = 1;
 
-    constructor(
-        @Inject(forwardRef(() => ApolloManager))
-        private readonly apolloManager: ApolloManager
-    ) {
+    constructor() {
         this.users = new Map<number, GameClientDefs>();
     }
 

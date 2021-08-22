@@ -1,11 +1,11 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PluginTestModule } from 'plugins/PluginTest/PluginTest.module';
-import { ApolloModule } from 'src/Apollo.module';
 import { PluginManager } from './Plugin.manager';
 
 @Module({
     imports: [
-        forwardRef(() => ApolloModule),
+        EventEmitterModule.forRoot(),
         PluginTestModule
     ],
     providers: [

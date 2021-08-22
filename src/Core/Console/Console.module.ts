@@ -1,10 +1,10 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { ApolloModule } from 'src/Apollo.module';
+import { Module } from '@nestjs/common';
+import { PluginModule } from '../Plugin/Plugin.module';
 import { ConsoleManager } from './Console.manager';
 
 @Module({
     imports: [
-        forwardRef(() => ApolloModule)
+        PluginModule
     ],
     providers: [
         ConsoleManager

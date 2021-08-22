@@ -1,9 +1,10 @@
 import * as ws from "ws";
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
-import { ApolloManager } from "src/Apollo.manager";
+import { Injectable, Logger } from '@nestjs/common';
 import { IncomingPacket } from "src/Message/Incoming/Incoming.packet";
 import { GameClientDefs } from "src/HabboHotel/GameClient/GameClient.defs";
 import { GameClientManager } from "src/HabboHotel/GameClient/GameClient.manager";
+import { MessageManager } from "src/Message/Message.manager";
+import { ConfigurationManager } from "src/Core/Configuration/Configuration.manager";
 
 @Injectable()
 export class NitroManager {
@@ -11,18 +12,19 @@ export class NitroManager {
     private server: ws.Server;
 
     constructor(
-        @Inject(forwardRef(() => ApolloManager))
-        private readonly apolloManager: ApolloManager
+        private readonly gameClientManager: GameClientManager,
+        private readonly messageManager: MessageManager,
+        private readonly configurationManager: ConfigurationManager
     ) {
         this.server = new ws.Server({
-            host: this.apolloManager.CoreManager.ConfigurationManager.getString("game.tcp.ip"),
-            port: this.apolloManager.CoreManager.ConfigurationManager.getInt("game.tcp.port_nitro")
+            host: this.configurationManager.getString("game.tcp.ip"),
+            port: this.configurationManager.getInt("game.tcp.port_nitro")
         })
 
         var self = this;
 
         this.server.on('connection', function connection(socket: ws) {
-            var gcm: GameClientManager = self.apolloManager.GameManager.GameClientManager;
+            var gcm: GameClientManager = self.gameClientManager;
             gcm.addUser(gcm.LastConnectionId, socket);
             socket.binaryType = 'arraybuffer';
             socket.onopen = () => {
@@ -35,7 +37,7 @@ export class NitroManager {
                     var opcode: number = packet.readShort();
                     packet.opcode = opcode;
                     var gameClient: GameClientDefs = gcm.getUser(gcm.LastConnectionId);
-                    self.apolloManager.MessageManager.execute(gameClient, packet, 'NITRO');
+                    self.messageManager.execute(gameClient, packet, 'NITRO');
                 }
             }
             socket.onclose = (event: ws.CloseEvent) => {
@@ -45,6 +47,6 @@ export class NitroManager {
             }
         })
 
-        this.logger.log("Started GameServer for Nitro on " + this.apolloManager.CoreManager.ConfigurationManager.getString("game.tcp.ip") + ":" + this.apolloManager.CoreManager.ConfigurationManager.getInt("game.tcp.port_nitro"));
+        this.logger.log("Started GameServer for Nitro on " + this.configurationManager.getString("game.tcp.ip") + ":" + this.configurationManager.getInt("game.tcp.port_nitro"));
     }
 }

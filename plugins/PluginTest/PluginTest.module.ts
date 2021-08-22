@@ -1,10 +1,10 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { ApolloModule } from 'src/Apollo.module';
+import { PluginModule } from 'src/Core/Plugin/Plugin.module';
 import { PluginTestExecutor } from './PluginTest.executor';
 
 @Module({
     imports: [
-        forwardRef(() => ApolloModule)
+        forwardRef(() => PluginModule)
     ],
     providers: [
         PluginTestExecutor

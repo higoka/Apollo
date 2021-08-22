@@ -1,16 +1,19 @@
-import { ApolloManager } from "src/Apollo.manager";
 import { UserLoggedInEvent } from "src/Core/Plugin/Events/UserLoggedIn.event";
+import { PluginManager } from "src/Core/Plugin/Plugin.manager";
 import { HabboDefs } from "src/HabboHotel/Habbo/Habbo.defs";
+import { HabboManager } from "src/HabboHotel/Habbo/Habbo.manager";
 import { AuthenticationOKMessageEvent } from "src/Message/Outgoing/Handshake/AuthenticationOKMessageEvent";
 import { MessageReceiver } from "../Message.receiver";
 
 export class SSOTicketMessageEvent extends MessageReceiver {
-    private apolloManager: ApolloManager;
+    private habboManager: HabboManager;
+    private pluginManager: PluginManager;
 
-    constructor(apolloManager: ApolloManager) {
+    constructor(habboManager: HabboManager, pluginManager: PluginManager) {
         super();
 
-        this.apolloManager = apolloManager;
+        this.habboManager = habboManager;
+        this.pluginManager = pluginManager;
     }
 
     public read(): void {
@@ -20,20 +23,20 @@ export class SSOTicketMessageEvent extends MessageReceiver {
             return;
         }
 
-        this.apolloManager.GameManager.HabboManager.loadHabbo(sso).then((habbo: HabboDefs) => {
+        this.habboManager.loadHabbo(sso).then((habbo: HabboDefs) => {
             if (habbo != null) {
                 habbo.setClient = this.GameClient;
                 this.GameClient.setHabbo = habbo;
                 var userLoggedEvent: UserLoggedInEvent = new UserLoggedInEvent();
                 userLoggedEvent.habbo = habbo;
                 userLoggedEvent.sso = sso;
-                this.apolloManager.EventEmitter.emit('user.logged.in', userLoggedEvent);
+                this.pluginManager.eventEmitter.emit('user.logged.in', userLoggedEvent);
 
                 if (this.GameClient.getHabbo.getHabboData == null) {
                     return;
                 }
 
-                this.apolloManager.GameManager.HabboManager.addOnlineUsers(habbo.getHabboData.getId, habbo);
+                this.habboManager.addOnlineUsers(habbo.getHabboData.getId, habbo);
 
                 this.GameClient.send(new AuthenticationOKMessageEvent().compose());
             }

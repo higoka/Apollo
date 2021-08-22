@@ -1,11 +1,7 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { ApolloModule } from 'src/Apollo.module';
+import { Module } from '@nestjs/common';
 import { GameClientManager } from './GameClient.manager';
 
 @Module({
-    imports: [
-        forwardRef(() => ApolloModule)
-    ],
     providers: [
         GameClientManager
     ],

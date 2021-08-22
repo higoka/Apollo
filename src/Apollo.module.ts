@@ -1,24 +1,17 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { ApolloManager } from './Apollo.manager';
+import { Module } from '@nestjs/common';
 import { CoreModule } from './Core/Core.module';
 import { GameModule } from './HabboHotel/Game.module';
 import { MessageModule } from './Message/Message.module';
-import { NetworkingModule } from './Networking/Networking.module';
+import { FlashModule } from './Networking/Flash/Flash.module';
+import { NitroModule } from './Networking/Nitro/Nitro.module';
 
 @Module({
     imports: [
-        forwardRef(() => CoreModule),
-        forwardRef(() => NetworkingModule),
-        forwardRef(() => GameModule),
-        forwardRef(() => MessageModule),
-        EventEmitterModule.forRoot()
-    ],
-    providers: [
-        ApolloManager
-    ],
-    exports: [
-        ApolloManager
+        CoreModule,
+        GameModule,
+        MessageModule,
+        NitroModule,
+        FlashModule
     ]
 })
 export class ApolloModule {}

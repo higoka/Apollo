@@ -1,11 +1,10 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { ApolloModule } from 'src/Apollo.module';
-import { HabboDefs } from './Habbo.defs';
+import { Module } from '@nestjs/common';
+import { UserModule } from 'src/Core/Database/User/User.module';
 import { HabboManager } from './Habbo.manager';
 
 @Module({
     imports: [
-        forwardRef(() => ApolloModule)
+        UserModule
     ],
     providers: [
         HabboManager

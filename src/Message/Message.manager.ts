@@ -1,6 +1,8 @@
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
-import { ApolloManager } from 'src/Apollo.manager';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigurationManager } from 'src/Core/Configuration/Configuration.manager';
+import { PluginManager } from 'src/Core/Plugin/Plugin.manager';
 import { GameClientDefs } from 'src/HabboHotel/GameClient/GameClient.defs';
+import { HabboManager } from 'src/HabboHotel/Habbo/Habbo.manager';
 import { SSOTicketMessageEvent } from './Incoming/Handshake/SSOTicketMessageEvent';
 import { IncomingPacket } from './Incoming/Incoming.packet';
 import { InOpcodeList } from './Incoming/InOpcode.list';
@@ -13,8 +15,9 @@ export class MessageManager {
     private packetNames: Map<number, string>;
 
     constructor(
-        @Inject(forwardRef(() => ApolloManager))
-        private readonly apolloManager: ApolloManager
+        private readonly configurationManager: ConfigurationManager,
+        private readonly habboManager: HabboManager,
+        private readonly pluginManager: PluginManager
     ) {
         this.incomingPackets = new Map<number, MessageReceiver>();
         this.packetNames = new Map<number, string>();
@@ -35,7 +38,7 @@ export class MessageManager {
         var handler: MessageReceiver = this.incomingPackets.get(packet.opcode);
 
         if (handler == null) {
-            if (this.apolloManager.CoreManager.ConfigurationManager.getBoolean("game.tcp.packets_log")) {
+            if (this.configurationManager.getBoolean("game.tcp.packets_log")) {
                 this.logger.debug("Unrecognized packet received: " + packet.opcode + " - " + client); 
             }
             return;
@@ -44,7 +47,7 @@ export class MessageManager {
         handler.GameClient = gameClient;
         handler.Packet = packet;
 
-        if (this.apolloManager.CoreManager.ConfigurationManager.getBoolean("game.tcp.packets_log")) {
+        if (this.configurationManager.getBoolean("game.tcp.packets_log")) {
             if (this.packetNames.has(packet.opcode)) {
                 this.logger.debug("Packet " + this.packetNames.get(packet.opcode) + " executed - " + client);
             } else {
@@ -56,7 +59,7 @@ export class MessageManager {
     }
 
     private setHandshake(): void {
-        this.incomingPackets.set(InOpcodeList.SSOTicketMessageEvent, new SSOTicketMessageEvent(this.apolloManager));
+        this.incomingPackets.set(InOpcodeList.SSOTicketMessageEvent, new SSOTicketMessageEvent(this.habboManager, this.pluginManager));
     }
 
     private setNames(): void {

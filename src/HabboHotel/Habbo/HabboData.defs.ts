@@ -1,5 +1,5 @@
-import { ApolloManager } from "src/Apollo.manager";
 import { UserEntity } from "src/Core/Database/User/User.entity";
+import { UserManager } from "src/Core/Database/User/User.manager";
 import { UserCurrencyEntity } from "src/Core/Database/User/UserCurrency.entity";
 
 export class HabboDataDefs {
@@ -15,10 +15,10 @@ export class HabboDataDefs {
     private homeRoom: number;
     private online: boolean;
     private currencies: Map<string, number>;
-    private apolloManager: ApolloManager;
+    private userManager: UserManager;
 
-    constructor(data: UserEntity, apolloManager: ApolloManager) {
-        this.apolloManager = apolloManager;
+    constructor(data: UserEntity, userManager: UserManager) {
+        this.userManager = userManager;
         this.id = data.id;
         this.username = data.user_info.username;
         this.motto = data.user_info.motto;
@@ -80,7 +80,7 @@ export class HabboDataDefs {
     public async loadCurrencies(): Promise<void> {
         this.currencies.clear();
 
-        return this.apolloManager.CoreManager.DatabaseManager.UserManager.findCurrencyByUserId(this.getId).then((currencies: UserCurrencyEntity[]) => {
+        return this.userManager.findCurrencyByUserId(this.getId).then((currencies: UserCurrencyEntity[]) => {
             for (var currency of currencies) {
                 this.currencies.set(currency.currency_name, currency.amount);
             }
