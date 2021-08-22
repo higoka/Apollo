@@ -6,7 +6,7 @@ import { PluginManager } from './Plugin.manager';
 @Module({
     imports: [
         forwardRef(() => ApolloModule),
-        PluginTestModule.import()
+        PluginTestModule
     ],
     providers: [
         PluginManager

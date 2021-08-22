@@ -10,6 +10,8 @@ export class PluginTestExecutor {
         @Inject(forwardRef(() => ApolloManager))
         private readonly apolloManager: ApolloManager
     ) {
-        
+        this.apolloManager.CoreManager.PluginManager.readEvent("user.logged.in", (event: UserLoggedInEvent) => {
+            this.logger.log(event.habbo.getHabboData.getUsername + " is logged to client");
+        })
     }
 }
