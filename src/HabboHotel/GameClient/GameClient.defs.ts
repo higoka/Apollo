@@ -22,7 +22,6 @@ export class GameClientDefs {
 
     public destroy(): void {
         this.channel = null;
-        this.habbo.setClient = null;
         this.habbo = null;
     }
 

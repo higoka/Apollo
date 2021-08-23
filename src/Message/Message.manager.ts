@@ -3,7 +3,7 @@ import { ConfigurationManager } from 'src/Core/Configuration/Configuration.manag
 import { PluginManager } from 'src/Core/Plugin/Plugin.manager';
 import { GameClientDefs } from 'src/HabboHotel/GameClient/GameClient.defs';
 import { HabboManager } from 'src/HabboHotel/Habbo/Habbo.manager';
-import { SSOTicketMessageEvent } from './Incoming/Handshake/SSOTicketMessageEvent';
+import { SSOTicketMessageEvent } from './Incoming/Handshake/SSOTicketMessage.event';
 import { IncomingPacket } from './Incoming/Incoming.packet';
 import { InOpcodeList } from './Incoming/InOpcode.list';
 import { MessageReceiver } from './Incoming/Message.receiver';
