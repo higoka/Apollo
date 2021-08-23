@@ -9,20 +9,27 @@ export class RCONManager {
     private readonly logger = new Logger(RCONManager.name);
     private server: http.Server;
     private rconMessage: Map<string, RCONMessageInterface>;
+    private ipWhitelist: Array<string>;
 
     constructor(
         private readonly configurationManager: ConfigurationManager
     ) {
         this.rconMessage = new Map<string, RCONMessageInterface>();
+        this.ipWhitelist = new Array<string>();
 
         this.setMessage();
+        this.setIpWhitelist();
         this.init();
- 
     }
 
     private init(): void {
         this.server = http.createServer();
         this.server.on('connection', (socket: net.Socket) => {
+            if (!this.ipWhitelist.includes(socket.remoteAddress)) {
+                socket.end();
+                return;
+            }
+
             socket.on('data', (data: string) => {
                 var jsonData: any = JSON.parse(data);
                 this.handleRCONMessage(jsonData);
@@ -36,6 +43,12 @@ export class RCONManager {
 
     private setMessage(): void {
         
+    }
+
+    private setIpWhitelist(): void {
+        for (var ip of this.configurationManager.getString('rcon.ip_whitelist').split(";")) {
+            this.ipWhitelist.push(ip);
+        }
     }
 
     public handleRCONMessage(message: any): void {
