@@ -56,4 +56,8 @@ export class FlashManager {
 
         this.logger.log("Started GameServer for Flash on " + this.configurationManager.getString("game.tcp.ip") + ":" + this.configurationManager.getInt("game.tcp.port_flash"));
     }
+
+    public destroy(): void {
+        this.server.close();
+    }
 }

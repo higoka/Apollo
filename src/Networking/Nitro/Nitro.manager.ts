@@ -49,4 +49,8 @@ export class NitroManager {
 
         this.logger.log("Started GameServer for Nitro on " + this.configurationManager.getString("game.tcp.ip") + ":" + this.configurationManager.getInt("game.tcp.port_nitro"));
     }
+
+    public destroy(): void {
+        this.server.close();
+    }
 }
