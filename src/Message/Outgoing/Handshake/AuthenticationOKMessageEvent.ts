@@ -7,6 +7,6 @@ export class AuthenticationOKMessageEvent extends MessageSender {
     }
 
     protected write(): void {
-        this.packet.writeInt(1);
+        
     }
 }

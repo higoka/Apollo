@@ -4,6 +4,7 @@ import { GameModule } from './HabboHotel/Game.module';
 import { MessageModule } from './Message/Message.module';
 import { FlashModule } from './Networking/Flash/Flash.module';
 import { NitroModule } from './Networking/Nitro/Nitro.module';
+import { RCONModule } from './Networking/RCON/RCON.module';
 
 @Module({
     imports: [
@@ -11,7 +12,8 @@ import { NitroModule } from './Networking/Nitro/Nitro.module';
         GameModule,
         MessageModule,
         NitroModule,
-        FlashModule
+        FlashModule,
+        RCONModule
     ]
 })
 export class ApolloModule {}
