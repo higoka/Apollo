@@ -1,9 +1,11 @@
 import * as http from "http";
-import * as net from "net";
 import * as url from "url";
+import * as net from "net";
 import { Injectable, Logger } from '@nestjs/common';
 import { RCONMessageInterface } from "src/Message/RCON/RCONMessage.interface";
 import { ConfigurationManager } from "src/Core/Configuration/Configuration.manager";
+import { DisconnectUserMessage } from "src/Message/RCON/DisconnectUser.message";
+import { GameClientManager } from "src/HabboHotel/GameClient/GameClient.manager";
 
 @Injectable()
 export class RCONManager {
@@ -12,7 +14,8 @@ export class RCONManager {
     private rconMessage: Map<string, RCONMessageInterface>;
 
     constructor(
-        private readonly configurationManager: ConfigurationManager
+        private readonly configurationManager: ConfigurationManager,
+        private readonly gameClientManager: GameClientManager
     ) {
         this.rconMessage = new Map<string, RCONMessageInterface>();
 
@@ -22,16 +25,22 @@ export class RCONManager {
 
     private init(): void {
         this.server = http.createServer();
-        this.server.on('connection', (socket: net.Socket) => {
-            if (!this.configurationManager.getString('rcon.ip_whitelist').split(",")[socket.remoteAddress] == null) {
-                socket.end();
+        this.server.on('request', (request: http.IncomingMessage, response: http.ServerResponse) => {
+            if (!this.configurationManager.getString('rcon.ip_whitelist').split(",")[request.socket.remoteAddress] == null) {
                 return;
             }
 
-            socket.on('data', (data: string) => {
-                var jsonData: any = JSON.parse(data);
-                this.handleRCONMessage(jsonData);
-            })
+            var { pathname, query } = url.parse(request.url);
+
+            response.setHeader['content-type'] = 'application/json';
+            if (pathname.includes('disconnect')) {
+                this.handleRCONMessage({
+                    key: 'disconnect',
+                    data: {
+                        user_id: query.split('=')[1]
+                    }
+                }, response);
+            }
         })
 
         this.server.listen(this.configurationManager.getInt('rcon.port'));
@@ -40,15 +49,15 @@ export class RCONManager {
     }
 
     private setMessage(): void {
-        
+        this.rconMessage.set('disconnect', new DisconnectUserMessage(this.gameClientManager))
     }
 
-    public handleRCONMessage(message: any): void {
+    public handleRCONMessage(message: any, response: http.ServerResponse): void {
         if (this.rconMessage.has(message.key)) {
             if (this.configurationManager.getBoolean('rcon.message_log')) {
                 this.logger.log("RCON message executed: " + message.key);
             }
-            this.rconMessage.get(message.key).read(message.data);
+            this.rconMessage.get(message.key).handle(message.data, response);
         } else {
             if (this.configurationManager.getBoolean('rcon.message_log')) {
                 this.logger.log("RCON message unrecognized: " + message.key);

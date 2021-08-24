@@ -20,6 +20,10 @@ export class GameClientDefs {
         return this.habbo;
     }
 
+    public get getChannel(): ws | net.Socket {
+        return this.channel;
+    }
+
     public destroy(): void {
         this.channel = null;
         this.habbo = null;

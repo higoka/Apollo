@@ -3,6 +3,7 @@ import * as net from "net";
 import { Injectable } from '@nestjs/common';
 import { GameClientDefs } from './GameClient.defs';
 import { OutgoingPacket } from "src/Message/Outgoing/Outgoing.packet";
+import { HabboDefs } from "../Habbo/Habbo.defs";
 
 @Injectable()
 export class GameClientManager {
@@ -45,5 +46,17 @@ export class GameClientManager {
 
     public getUser(connectionId: number): GameClientDefs {
         return this.clients.get(connectionId);
+    }
+
+    public getHabbo(userId: number): HabboDefs {
+        for (var client of this.clients.values()) {
+            if (client.getHabbo == null) {
+                continue;
+            }
+
+            if (client.getHabbo.getHabboData.getId == userId) {
+                return client.getHabbo;
+            }
+        }
     }
 }

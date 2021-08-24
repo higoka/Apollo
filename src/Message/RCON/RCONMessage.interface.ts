@@ -1,3 +1,5 @@
+import * as http from "http";
+
 export interface RCONMessageInterface {
-    read(data: any): void;
+    handle(data: any, response: http.ServerResponse): void;
 }

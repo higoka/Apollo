@@ -1,3 +1,5 @@
+import * as ws from "ws";
+import * as net from "net";
 import { UserEntity } from "src/Core/Database/User/User.entity";
 import { UserManager } from "src/Core/Database/User/User.manager";
 import { GameClientDefs } from "../GameClient/GameClient.defs";
@@ -29,5 +31,13 @@ export class HabboDefs {
 
     public get getClient(): GameClientDefs {
         return this.client;
+    }
+
+    public disconnect(client: ws | net.Socket): void {
+        if (client instanceof net.Socket) {
+            client.destroy();
+        } else if (client instanceof ws) {
+            client.close();
+        }
     }
 }
