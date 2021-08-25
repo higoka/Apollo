@@ -1,4 +1,4 @@
-import { ServerResponse } from "http";
+import { Response } from "express";
 import { GameClientManager } from "src/HabboHotel/GameClient/GameClient.manager";
 import { HabboDefs } from "src/HabboHotel/Habbo/Habbo.defs";
 import { RCONMessageInterface } from "./RCONMessage.interface";
@@ -10,21 +10,21 @@ export class DisconnectUserMessage implements RCONMessageInterface {
         this.gameClientManager = gameClientManager;
     }
 
-    handle(data: any, response: ServerResponse): void {
+    handle(data: any, response: Response): void {
         var habbo: HabboDefs = this.gameClientManager.getHabbo(data.user_id);
 
         if (habbo == null) {
-            response.end(JSON.stringify({
+            response.json({
                 'statusType': 'error',
                 'message': 'User not found'
-            }, null, 2));
+            });
             return;
         }
 
         habbo.disconnect(habbo.getClient.getChannel);
-        response.end(JSON.stringify({
+        response.json({
             'statusType': 'success',
             'message': habbo.getHabboData.getUsername + ' disconnected!'
-        }, null, 2));
+        });
     }
 }

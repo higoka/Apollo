@@ -1,5 +1,5 @@
-import * as http from "http";
+import { Response } from "express";
 
 export interface RCONMessageInterface {
-    handle(data: any, response: http.ServerResponse): void;
+    handle(data: any, response: Response): void;
 }
