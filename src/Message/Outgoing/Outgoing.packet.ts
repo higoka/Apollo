@@ -3,7 +3,9 @@ export class OutgoingPacket {
 
     constructor(opcode?: number) {
         this.buffer = new Uint8Array();
-        this.writeShort(opcode);
+        if (opcode != null) {
+            this.writeShort(opcode);
+        }
     }
 
     public writeByte(byte: number): this {
