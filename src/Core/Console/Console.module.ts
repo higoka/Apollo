@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { FlashModule } from 'src/Networking/Flash/Flash.module';
 import { NitroModule } from 'src/Networking/Nitro/Nitro.module';
+import { RCONModule } from 'src/Networking/RCON/RCON.module';
 import { PluginModule } from '../Plugin/Plugin.module';
 import { ConsoleManager } from './Console.manager';
 
@@ -8,7 +9,8 @@ import { ConsoleManager } from './Console.manager';
     imports: [
         PluginModule,
         NitroModule,
-        FlashModule
+        FlashModule,
+        RCONModule
     ],
     providers: [
         ConsoleManager

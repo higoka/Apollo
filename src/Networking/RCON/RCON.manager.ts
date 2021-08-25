@@ -22,6 +22,10 @@ export class RCONManager {
         this.init();
     }
 
+    public destroy(): void {
+        this.server.close();
+    }
+
     private init(): void {
         var api: express.Express = express();
 

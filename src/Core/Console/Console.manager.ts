@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as rl from "readline";
 import { FlashManager } from 'src/Networking/Flash/Flash.manager';
 import { NitroManager } from 'src/Networking/Nitro/Nitro.manager';
+import { RCONManager } from 'src/Networking/RCON/RCON.manager';
 import { DelayUtils } from 'src/Utils/DelayUtils';
 import { PluginManager } from '../Plugin/Plugin.manager';
 
@@ -12,7 +13,8 @@ export class ConsoleManager {
     constructor(
         private readonly pluginManager: PluginManager,
         private readonly nitroManager: NitroManager,
-        private readonly flashManager: FlashManager
+        private readonly flashManager: FlashManager,
+        private readonly rconManager: RCONManager
     ) {
         const console: rl.Interface = rl.createInterface({
             input: process.stdin,
@@ -27,6 +29,7 @@ export class ConsoleManager {
                     this.pluginManager.eventEmitter.emit('apollo.shutdown.started');
                     this.nitroManager.destroy();
                     this.flashManager.destroy();
+                    this.rconManager.destroy();
                     await DelayUtils.sleep(3000);
                     this.logger.log("Apollo is shutdowned with success");
                     await DelayUtils.sleep(5000);
